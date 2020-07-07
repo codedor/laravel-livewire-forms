@@ -12,7 +12,6 @@
         {{ $label }}
     </label>
     @endforeach
-@dump($field->default)
 
     @include('livewire-forms::fields.error')
 </div>
