@@ -4,6 +4,8 @@ namespace Codedor\LivewireForms\Fields;
 
 abstract class Field
 {
+    public $containsFile = false;
+
     public function render()
     {
         return view($this->component, [

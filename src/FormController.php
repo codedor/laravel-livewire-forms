@@ -2,7 +2,6 @@
 
 namespace Codedor\LivewireForms;
 
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,18 +10,23 @@ class FormController extends Component
     use WithFileUploads;
 
     public $component;
+    public $fields;
+    public $files;
     public $form;
     public $locale;
     public $model;
     public $savedModel;
-
-    public $fields = [];
-    public $validation = [];
     public $step;
+
+    public $validation = [];
+
+    public $casts = [
+        'fields' => 'collection'
+    ];
 
     public function hydrate()
     {
-        // Important for translated values
+        // Important for translated values (ex.: in select fields)
         app()->setLocale($this->locale);
     }
 
@@ -41,9 +45,9 @@ class FormController extends Component
         // Get fields and default values
         $this->fields = $this->getFields()
             ->mapWithKeys(function($value) {
-                return [optional($value)->name => optional($value)->value ?? ''];
-            })
-            ->toArray();
+                $value = optional($value);
+                return [$value->name => $value->value ?? $value->default ?? ''];
+            });
     }
 
     public function getFields()
@@ -51,6 +55,17 @@ class FormController extends Component
         return collect($this->form::fieldStack())
             ->filter(function($value) {
                 return (optional($value)->isField !== false);
+            });
+    }
+
+    public function getFileFields()
+    {
+        return $this->getFields()
+            ->filter(function($value) {
+                return $value->containsFile;
+            })
+            ->mapWithKeys(function ($value) {
+                return [$value->name => $value];
             });
     }
 
@@ -64,7 +79,7 @@ class FormController extends Component
         session()->put('step', $this->step);
         session()->put('formFields', $this->fields);
 
-        return view($this->component ?? 'livewire.forms.form');
+        return view($this->component ?? 'livewire-forms::form');
     }
 
     public function nextStep()
@@ -85,13 +100,22 @@ class FormController extends Component
         }
     }
 
+    public function validateStep($step = null)
+    {
+        $validation = $this->form::stepValidation($step ?? $this->step);
+        $this->validate($validation);
+    }
+
     public function submit()
     {
+        // Parse special fields
+        $this->beforeSubmit();
+
         // Validate
         $this->validateData();
 
-        // Parse special fields
-        $this->beforeSave();
+        // Save uploaded files
+        $this->saveUploadedFiles();
 
         // Save the model
         $this->saveData();
@@ -106,26 +130,32 @@ class FormController extends Component
         $this->resetForm();
     }
 
-    public function validateStep($step = null)
-    {
-        $validation = $this->form::stepValidation($step ?? $this->step);
-        $this->validate($validation);
-    }
-
     public function validateData()
     {
         $this->validate($this->validation);
     }
 
-    public function beforeSave()
+    public function beforeSubmit()
     {
         //
+    }
+
+    public function saveUploadedFiles()
+    {
+        $fileFields = $this->getFileFields();
+
+        foreach ($this->files as $key => $file) {
+            $field = $fileFields[$key] ?? [];
+            $file = $file->upload($field->disk ?? 'public');
+            $this->fields[$key] = $file->id;
+        }
     }
 
     public function saveData()
     {
         if ($this->model) {
-            $this->savedModel = $this->model::create($this->fields);
+            $fields = $this->fields->toArray();
+            $this->savedModel = $this->model::create($fields);
         }
     }
 

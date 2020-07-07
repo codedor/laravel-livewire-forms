@@ -26,8 +26,14 @@ abstract class Form
                 return (optional($value)->isField !== false);
             })
             ->each(function($value) use (&$rules) {
-                $rules->put('fields.' . $value->name, $value->rules ?? '');
+                if ($value->containsFile) {
+                    $rules->put('files.' . $value->name, $value->rules ?? '');
+                } else {
+                    $rules->put('fields.' . $value->name, $value->rules ?? '');
+                }
             });
+
+
 
         return $rules->toArray();
     }

@@ -7,7 +7,7 @@
         id="{{ $field->name }}"
         name="{{ $field->name }}"
         placeholder="{{ $field->label }}"
-        wire:model="{{ $field->name }}"
+        wire:model="files.{{ $field->name }}"
     >
 
     @include('livewire-forms::fields.error')
