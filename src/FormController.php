@@ -91,11 +91,7 @@ class FormController extends Component
         $this->validateData();
 
         // Parse special fields
-        foreach ($this->getFields() as $field) {
-            if (method_exists($this, 'parse' . Str::studly($field->name))) {
-                $this->{'parse' . Str::studly($field->name)}();
-            }
-        }
+        $this->beforeSave();
 
         // Save the model
         $this->saveData();
@@ -119,6 +115,11 @@ class FormController extends Component
     public function validateData()
     {
         $this->validate($this->validation);
+    }
+
+    public function beforeSave()
+    {
+        //
     }
 
     public function saveData()
