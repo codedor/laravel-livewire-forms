@@ -1,4 +1,5 @@
 
+
 ## Fields
 This package has a bunch of fields that come with it, here you can find a list of everything (in alphabetical order), with examples.
 
@@ -12,18 +13,18 @@ Field::make('field_name')
 A label and tooltip can be passed along like this:
 ```php
 Field::make('field_name')
-	->label(__('form.field label'))
-	->tooltip(__('form.field tooltip'))
+    ->label(__('form.field label'))
+    ->tooltip(__('form.field tooltip'))
 ```
 You can also pass along rules, just like you would anywhere else in Laravel:
 ```php
 Field::make('field_name')
-	->rules('required_if:fields.contact_info,true')
+    ->rules('required_if:fields.contact_info,true')
 ```
 Should you, for whatever reason, require a specific variable for a field, you can pass along anything you like. This can be usefull for Frontend, should they require certain class names for a field.
 ```php
 Field::make('field_name')
-	->superman('Clark Kent')
+    ->superman('Clark Kent')
 ```
 You can then call this data in the blade file:
 ```php
@@ -32,32 +33,32 @@ You can then call this data in the blade file:
 If you want full control of your blade file, you can either make a [Custom Field](custom-fields.md) or call a different blade file like so:
 ```php
 Field::make('field_name')
-	->component('components.fields.custom_field')
+    ->component('components.fields.custom_field')
 ```
 You can define a default value for your field by adding the `value` or `default` function.
 ```php
 Field::make('field_name')
-	->value('Clark Kent')
+    ->value('Clark Kent')
 ```
 
 ---
 
-1.  [Button](#button)
-2.  [Checkbox](#checkbox)
-3.  [Conditional](#conditional)
-4.  [Country](#country)
-5.  [Currency](#currency)
-6.  [Date](#date)
-7.  [Email](#email)
-8.  [File](#file)
-9.  [Hidden](#hidden)
-10. [Row](#row)
-11.  [Password](#password)
-12.  [Select](#select)
-13.  [Step](#step)
-14.  [Textarea](#textarea)
-15.  [Text](#text)
-16.  [Title](#title)
+1. [Button](#button)
+2. [Checkbox](#checkbox)
+3. [Conditional](#conditional)
+4. [Country](#country)
+5. [Date](#date)
+6. [Email](#email)
+7. [File](#file)
+8. [Hidden](#hidden)
+9. [Row](#row)
+10. [RadioGroup](#radio-group)
+11. [Password](#password)
+12. [Select](#select)
+13. [Step](#step)
+14. [Textarea](#textarea)
+15. [Text](#text)
+16. [Title](#title)
 ---
 ### <a name="button"></a>Button
 
@@ -70,8 +71,17 @@ If you want the button to do another action defined in your FormController, add 
 
 ```php
 Button::make(__('form.next step'))
-	->action('nextStep')
+    ->action('nextStep')
 ```
+
+---
+### <a name="country"></a>Country
+
+The checkbox fields creates a dropdown with countries.
+```php
+CountryField::make('country')
+```
+**Note:** this uses the select field blade file, pass `->component()` with a custom blade file if needed.
 
 ---
 ### <a name="checkbox"></a>Checkbox
@@ -91,12 +101,12 @@ This can be achieved by using the conditional field.
 CheckboxField::make('billing_address'),
 
 Conditional::make(
-	'billing_address',
-	true,
-	[
-		TextField::make('contact_email')
-			->rules('required_if:fields.contact_info,true')
-	]
+    'billing_address',
+    true,
+    [
+        TextField::make('contact_email')
+            ->rules('required_if:fields.contact_info,true')
+    ]
 ]),
 ```
 The first argument is the field name that the conditional field is going to check, the second parameter is the value it will check for. In this example, it will check if `'billing_address'` equals `true` (aka checked). If so, the fields in the third parameter will be shown.
@@ -110,7 +120,7 @@ If you **also** need to show fields when `'billing_address'` equals `false`, you
 The date field returns a basic HTML5 datepicker.
 ```php
 DateField::make('end_date')
-	->rules('required|date|after:fields.start_date')
+    ->rules('required|date|after:fields.start_date')
 ```
 
 ---
@@ -130,7 +140,7 @@ FileField::make('file_id')
 You can define a certain disk to save to like so:
 ```php
 FileField::make('file_id')
-	->disk('private')
+    ->disk('private')
 ```
 **Note:** it is important that you make the fieldname an `_id`, as this package returns an Attachment ID when saving the file.
 
@@ -139,7 +149,19 @@ FileField::make('file_id')
 The hidden field returns a hidden input, this is useful if for example you need the `user_id` saved in your model.
 ```php
 HiddenField::make('user_id')
-	->value(optional(auth('user')->user())->id),
+    ->value(optional(auth('user')->user())->id),
+```
+
+---
+### <a name="radio-group"></a>RadioGroup
+Returns a group of radio buttons, pass the different options in the `options` function.
+```php
+RadioGroup::make('registration_student_type')
+    ->options([
+        'first' => 'Number one',
+        'second' => 'Number two',
+        'three' => 'Number three'
+    ])
 ```
 
 ---
@@ -169,11 +191,11 @@ PasswordField::make('email')
 Returns a basic HTML5 select field, you have to pass an array to the `options` function like so:
 ```php
 SelectField::make('field_name')
-	->options([
-		'first' => 'Number one',
-		'second' => 'Number two',
-		'th' => 'Number three'
-	])
+    ->options([
+        'first' => 'Number one',
+        'second' => 'Number two',
+        'three' => 'Number three'
+    ])
 ```
 
 ---
