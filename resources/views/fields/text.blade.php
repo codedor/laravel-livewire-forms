@@ -2,6 +2,7 @@
     @include('livewire-forms::fields.label')
 
     <input
+        type="{{ $field->type ?? 'text' }}"
         class="{{ $field->class }}"
         id="{{ $field->name }}"
         name="{{ $field->name }}"
