@@ -20,10 +20,6 @@ class FormController extends Component
 
     public $validation = [];
 
-    public $casts = [
-        'fields' => 'collection'
-    ];
-
     public function hydrate()
     {
         // Important for translated values (ex.: in select fields)
@@ -47,7 +43,8 @@ class FormController extends Component
             ->mapWithKeys(function($value) {
                 $value = optional($value);
                 return [$value->name => $value->value ?? $value->default ?? ''];
-            });
+            })
+            ->toArray();
     }
 
     public function getFields()
@@ -144,7 +141,12 @@ class FormController extends Component
     {
         $fileFields = $this->getFileFields();
 
-        foreach ($this->files as $key => $file) {
+        // Set it to null, otherwise it's an empty string
+        foreach (array_keys($fileFields->toArray()) as $key) {
+            $this->fields[$key] = null;
+        }
+
+        foreach ($this->files ?? [] as $key => $file) {
             $field = $fileFields[$key] ?? [];
             $file = $file->upload($field->disk ?? 'public');
             $this->fields[$key] = $file->id;
@@ -154,8 +156,7 @@ class FormController extends Component
     public function saveData()
     {
         if ($this->model) {
-            $fields = $this->fields->toArray();
-            $this->savedModel = $this->model::create($fields);
+            $this->savedModel = $this->model::create($this->fields);
         }
     }
 
