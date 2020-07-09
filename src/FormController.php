@@ -29,7 +29,7 @@ class FormController extends Component
     public function mount($form, $model = null, $component = null)
     {
         session()->remove('step');
-        session()->remove('formFields');
+        session()->remove('form-fields');
 
         $this->form = $form;
         $this->model = $model;
@@ -74,7 +74,7 @@ class FormController extends Component
     public function render()
     {
         session()->put('step', $this->step);
-        session()->put('formFields', $this->fields);
+        session()->put('form-fields', $this->fields);
 
         return view($this->component ?? 'livewire-forms::form');
     }
@@ -111,6 +111,9 @@ class FormController extends Component
         // Validate
         $this->validateData();
 
+        // Parse and remove unneeded conditional data
+        $this->parseConditionalData();
+
         // Save uploaded files
         $this->saveUploadedFiles();
 
@@ -135,6 +138,19 @@ class FormController extends Component
     public function beforeSubmit()
     {
         //
+    }
+
+    public function parseConditionalData()
+    {
+        $fields = $this->getFields()->mapWithKeys(function($field) {
+            return [$field->name => $field];
+        });
+
+        foreach ($this->fields as $key => &$field) {
+            if (!isset($fields[$key])) {
+                $field = null;
+            }
+        }
     }
 
     public function saveUploadedFiles()

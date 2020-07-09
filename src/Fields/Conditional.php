@@ -27,12 +27,7 @@ class Conditional extends Field
     {
         $fields = collect([]);
 
-        collect($this->trueFields)
-            ->each(function($value) use (&$fields) {
-                $fields->push($value->fields());
-            });
-
-        collect($this->falseFields)
+        collect($this->getFields())
             ->each(function($value) use (&$fields) {
                 $fields->push($value->fields());
             });
@@ -42,10 +37,15 @@ class Conditional extends Field
 
     public function getFields()
     {
-        if (session('formFields')[$this->checkField] === $this->checkValue) {
-            return $this->trueFields ?? [];
-        }
+        return (
+            ($this->checkValue())
+                ? $this->trueFields
+                : $this->falseFields
+            ) ?? [];
+    }
 
-        return $this->falseFields ?? [];
+    public function checkValue()
+    {
+        return session("form-fields.{$this->checkField}") === $this->checkValue;
     }
 }

@@ -10,8 +10,8 @@ abstract class Form
     {
         $fields = collect([]);
         collect($stack ?? static::fields())
-            ->each(function($value) use (&$fields) {
-                $fields = $fields->merge($value->fields());
+            ->each(function($field) use (&$fields) {
+                $fields = $fields->merge($field->fields());
             });
 
         return $fields->toArray();
