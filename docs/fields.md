@@ -21,7 +21,7 @@ You can also pass along rules, just like you would anywhere else in Laravel:
 Field::make('field_name')
     ->rules('required_if:fields.contact_info,true')
 ```
-Should you, for whatever reason, require a specific variable for a field, you can pass along anything you like. This can be usefull for Frontend, should they require certain class names for a field.
+Should you, for whatever reason, require a specific variable for a field, you can pass along anything you like. This can be useful for Frontend, should they require certain class names for a field.
 ```php
 Field::make('field_name')
     ->superman('Clark Kent')
@@ -105,15 +105,13 @@ Conditional::make(
     true,
     [
         TextField::make('contact_email')
-            ->rules('required_if:fields.contact_info,true')
+            ->rules('required')
     ]
 ]),
 ```
 The first argument is the field name that the conditional field is going to check, the second parameter is the value it will check for. In this example, it will check if `'billing_address'` equals `true` (aka checked). If so, the fields in the third parameter will be shown.
 
 If you **also** need to show fields when `'billing_address'` equals `false`, you can pass an array of fields as the fourth parameter, just like the third parameter. These will be shown if the check does not pass.
-
-**IMPORTANT** When adding validation, you must keep in mind that the validation only needs to sometimes happen, so use `required_if...` where needed.
 
 ---
 ### <a name="date"></a>Date
