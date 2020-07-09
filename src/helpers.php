@@ -24,3 +24,12 @@ if (!function_exists('getCountryName')) {
         });
     }
 }
+
+if (!function_exists('getCountryCode')) {
+    function getCountryCode($name)
+    {
+        return Countries::where('name.common', $name)
+            ->pluck('cca2')
+            ->first();
+    }
+}
