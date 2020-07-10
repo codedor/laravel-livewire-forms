@@ -67,23 +67,25 @@ abstract class Field
 
     public function checkConditional()
     {
-        if ($this->conditional) {
-            if (optional($this->conditional)[1] instanceof Closure) {
-                return call_user_func(
-                    $this->conditional[1],
-                    session("form-fields.{$this->conditional[0]}"),
-                    $this->conditional[0],
-                    optional(session('form-fields', []))
-                );
+        if (!$this->conditional) {
+            return true;
+        }
+
+        if (optional($this->conditional)[1] instanceof Closure) {
+            return call_user_func(
+                $this->conditional[1],
+                session("form-fields.{$this->conditional[0]}"),
+                $this->conditional[0],
+                optional(session('form-fields', []))
+            );
+        } else {
+            if (gettype($this->conditional) === 'array') {
+                return session("form-fields.{$this->conditional[0]}") === $this->conditional[1];
             } else {
-                if (gettype($this->conditional) === 'array') {
-                    return session("form-fields.{$this->conditional[0]}") === $this->conditional[1];
-                } else {
-                    return session("form-fields.{$this->conditional}") === true;
-                }
+                return session("form-fields.{$this->conditional}") === true;
             }
         }
 
-        return true;
+        return false;
     }
 }

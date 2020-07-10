@@ -26,13 +26,10 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($form, $model = null, $component = null)
+    public function mount($component = null)
     {
         session()->remove('step');
         session()->remove('form-fields');
-
-        $this->form = $form;
-        $this->model = $model;
         $this->component = $component;
         $this->locale = app()->getLocale();
         $this->validation = $this->form::validation();

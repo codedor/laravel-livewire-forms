@@ -1,6 +1,3 @@
-
-
-
 ## Fields
 This package has a bunch of fields that come with it, here you can find a list of everything (in alphabetical order), with examples.
 
