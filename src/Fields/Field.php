@@ -60,6 +60,11 @@ abstract class Field
         return [$this];
     }
 
+    public function getValue()
+    {
+        return session("form-fields.{$this->name}");
+    }
+
     public function checkConditional()
     {
         if ($this->conditional) {

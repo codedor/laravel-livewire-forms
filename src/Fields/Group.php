@@ -24,6 +24,12 @@ class Group extends Field
         return $this->fields;
     }
 
+    public function groupFields($fields)
+    {
+        $this->fields = $fields;
+        return $this;
+    }
+
     public function __call($name, $value)
     {
         parent::__call($name, $value);
