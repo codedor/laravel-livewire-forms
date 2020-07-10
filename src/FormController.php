@@ -148,7 +148,7 @@ class FormController extends Component
         $fields = $this->getFields()->mapWithKeys(function($field) {
             return [$field->name => $field];
         });
-dd($fields);
+
         foreach ($this->fields as $key => &$field) {
             if (!isset($fields[$key])) {
                 $field = null;
