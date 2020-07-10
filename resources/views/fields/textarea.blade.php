@@ -3,10 +3,10 @@
 
     <textarea
         class="{{ $field->class }}"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
         placeholder="{{ $field->label }}"
-        wire:model.lazy="fields.{{ $field->name }}"
+        wire:model.lazy="fields.{{ $field->getName() }}"
     ></textarea>
 
     @include('livewire-forms::fields.error')

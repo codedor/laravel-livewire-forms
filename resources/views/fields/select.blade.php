@@ -3,9 +3,9 @@
 
     <select
         class="{{ $field->class }}"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
-        wire:model.lazy="fields.{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
+        wire:model.lazy="fields.{{ $field->getName() }}"
     >
         <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)

@@ -2,9 +2,9 @@
     <input
         type="checkbox"
         class="{{ $field->class }}"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
-        wire:model.lazy="fields.{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
+        wire:model.lazy="fields.{{ $field->getName() }}"
     >
 
     @include('livewire-forms::fields.label')

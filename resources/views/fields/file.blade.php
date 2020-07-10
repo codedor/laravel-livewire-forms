@@ -4,10 +4,10 @@
     <input
         type="file"
         class="{{ $field->class }}"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
         placeholder="{{ $field->label }}"
-        wire:model="files.{{ $field->name }}"
+        wire:model="files.{{ $field->getName() }}"
     >
 
     @include('livewire-forms::fields.error')

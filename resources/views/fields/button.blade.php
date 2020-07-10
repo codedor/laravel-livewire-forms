@@ -4,8 +4,8 @@
             wire:click.prevent="{{ $field->action }}()"
         @endif
         type="submit"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
-        value="{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
+        value="{{ $field->getName() }}"
     >
 </div>

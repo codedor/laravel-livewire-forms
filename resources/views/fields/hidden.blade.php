@@ -1,8 +1,8 @@
 <div>
     <input
         type="hidden"
-        id="{{ $field->name }}"
-        name="{{ $field->name }}"
-        wire:model.lazy="fields.{{ $field->name }}"
+        id="{{ $field->getName() }}"
+        name="{{ $field->getName() }}"
+        wire:model.lazy="fields.{{ $field->getName() }}"
     >
 </div>

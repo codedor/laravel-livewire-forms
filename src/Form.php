@@ -6,6 +6,16 @@ abstract class Form
 {
     abstract public static function fields();
 
+    public static function getFields()
+    {
+        $fields = collect(static::fields());
+        foreach ($fields as &$field) {
+            $field = $field->fields();
+        }
+
+        return $fields;
+    }
+
     public static function fieldStack($stack = null): array
     {
         $fields = collect([]);
@@ -14,6 +24,10 @@ abstract class Form
                 $fields = $fields->merge($field->fields());
             });
 
+//         $noMoreFields = false;
+//         $interger = false;
+//         while (!$noMoreFields)
+// dd($fields);
         return $fields->toArray();
     }
 

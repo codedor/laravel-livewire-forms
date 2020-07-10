@@ -20,7 +20,7 @@
         </ul>
 
         <form wire:submit.prevent="submit">
-            @foreach($form::fields() as $field)
+            @foreach($form::getFields() as $field)
                 {{ optional($field)->render() }}
             @endforeach
         </form>

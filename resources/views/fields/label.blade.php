@@ -1,3 +1,3 @@
-<label for="{{ $field->name }}">
+<label for="{{ $field->getName() }}">
     {{ $field->label }}
 </label>

@@ -45,6 +45,8 @@ class FormController extends Component
                 return [$value->name => $value->value ?? $value->default ?? ''];
             })
             ->toArray();
+
+        $this->fields['locale'] = $this->locale;
     }
 
     public function getFields()
@@ -53,6 +55,7 @@ class FormController extends Component
             ->filter(function($value) {
                 return (optional($value)->isField !== false);
             });
+
     }
 
     public function getFileFields()
@@ -145,7 +148,7 @@ class FormController extends Component
         $fields = $this->getFields()->mapWithKeys(function($field) {
             return [$field->name => $field];
         });
-
+dd($fields);
         foreach ($this->fields as $key => &$field) {
             if (!isset($fields[$key])) {
                 $field = null;
