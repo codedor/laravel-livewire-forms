@@ -21,14 +21,24 @@ abstract class Form
         $fields = collect([]);
         collect($stack ?? static::fields())
             ->each(function($field) use (&$fields) {
-                $fields = $fields->merge($field->fields());
+                $fields = $fields->merge(self::getFieldStackFromField($field));
             });
 
-//         $noMoreFields = false;
-//         $interger = false;
-//         while (!$noMoreFields)
-// dd($fields);
         return $fields->toArray();
+    }
+
+    public static function getFieldStackFromField($field)
+    {
+        $return = collect([]);
+        if (isset($field->fields)) {
+            foreach ($field->fields() as $field) {
+                $return->push(self::getFieldStackFromField($field));
+            }
+        } else {
+            $return->push($field);
+        }
+
+        return $return->flatten();
     }
 
     public static function validation($stack = null): array
@@ -39,15 +49,16 @@ abstract class Form
         $fields->filter(function($value) {
                 return (optional($value)->isField !== false);
             })
+            ->filter(function($field) {
+                return $field->checkConditional();
+            })
             ->each(function($value) use (&$rules) {
                 if ($value->containsFile) {
-                    $rules->put('files.' . $value->name, $value->rules ?? '');
+                    $rules->put('files.' . $value->getName(), $value->rules ?? '');
                 } else {
-                    $rules->put('fields.' . $value->name, $value->rules ?? '');
+                    $rules->put('fields.' . $value->getName(), $value->rules ?? '');
                 }
             });
-
-
 
         return $rules->toArray();
     }

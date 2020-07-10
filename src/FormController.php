@@ -42,7 +42,7 @@ class FormController extends Component
         $this->fields = $this->getFields()
             ->mapWithKeys(function($value) {
                 $value = optional($value);
-                return [$value->name => $value->value ?? $value->default ?? ''];
+                return [$value->getName() => $value->value ?? $value->default ?? ''];
             })
             ->toArray();
 
@@ -55,7 +55,6 @@ class FormController extends Component
             ->filter(function($value) {
                 return (optional($value)->isField !== false);
             });
-
     }
 
     public function getFileFields()
@@ -65,7 +64,7 @@ class FormController extends Component
                 return $value->containsFile;
             })
             ->mapWithKeys(function ($value) {
-                return [$value->name => $value];
+                return [$value->getName() => $value];
             });
     }
 
@@ -145,8 +144,10 @@ class FormController extends Component
 
     public function parseConditionalData()
     {
-        $fields = $this->getFields()->mapWithKeys(function($field) {
-            return [$field->name => $field];
+        $fields = $this->getFields()->mapWithKeys(function ($field) {
+            return [$field->getName() => $field];
+        })->filter(function ($field) {
+            return $field->checkConditional();
         });
 
         foreach ($this->fields as $key => &$field) {
