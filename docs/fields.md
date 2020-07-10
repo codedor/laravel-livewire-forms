@@ -113,11 +113,12 @@ The `Button` field is usually used to make the submit form button.
 Button::make(__('form.submit'))
 ```
 The first argument is used for the label.
-If you want the button to do another action defined in your FormController, add the `action` function to the Button field, like so:
+
+If you want the button to do another action defined in your FormController, add the `action` function to the Button field.
 
 ```php
 Button::make(__('form.next step'))
-    ->action('nextStep')
+    ->action('doSomethingElse')
 ```
 
 ---
