@@ -4,10 +4,6 @@
             {{ session('message') }}
         </div>
     @else
-        <form wire:submit.prevent="submit">
-            @foreach($form->getFields() as $field)
-                {{ optional($field)->render() }}
-            @endforeach
-        </form>
+        @include('livewire-forms::components.form')
     @endif
 </div>

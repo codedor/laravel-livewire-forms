@@ -73,7 +73,7 @@ abstract class Field
                     $this->conditional[1],
                     session("form-fields.{$this->conditional[0]}"),
                     $this->conditional[0],
-                    session('form-fields')
+                    optional(session('form-fields', []))
                 );
             } else {
                 if (gettype($this->conditional) === 'array') {

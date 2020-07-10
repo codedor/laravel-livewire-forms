@@ -16,6 +16,7 @@ abstract class Form
         return $fields;
     }
 
+    // Return only the fields and nested fields (without Row, Group, ...)
     public static function fieldStack($stack = null): array
     {
         $fields = collect([]);

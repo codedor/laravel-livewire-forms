@@ -1,10 +1,36 @@
 
 
+
 ## Fields
 This package has a bunch of fields that come with it, here you can find a list of everything (in alphabetical order), with examples.
 
 ---
-### Important notes
+* [General notes and information](#important-notes)
+    * [Adding a field](#adding-field)
+    * [Conditional fields](#conditional-fields)
+    * [Custom component](#custom-component)
+    * [Validation](#validation)
+* [Button](#button)
+* [Checkbox](#checkbox)
+* [Country](#country)
+* [Date](#date)
+* [Email](#email)
+* [File](#file)
+* [Group](#group)
+* [Hidden](#hidden)
+* [Row](#row)
+* [RadioGroup](#radio-group)
+* [Password](#password)
+* [Select](#select)
+* [Step](#step)
+* [Textarea](#textarea)
+* [Text](#text)
+* [Title](#title)
+
+---
+### <a name="important-notes"></a>General notes and information
+
+#### <a name="adding-field"></a>Adding a field
 This information goes for almost every fields in the list, however should something differ, it will be noted.
 To initialize a field, use the `::make`, like you would in Nova:
 ```php
@@ -16,11 +42,62 @@ Field::make('field_name')
     ->label(__('form.field label'))
     ->tooltip(__('form.field tooltip'))
 ```
+#### <a name="conditional-fields"></a>Conditional fields
+If some fields may only be shown when another field is a certain value, you can add `->conditional` to your field. There's a couple of different ways to do this. First, you can just add this, then it will check if the field name you entered is `true`, this is handy for checking on checkbox fields.
+
+```php
+CheckboxField::make('show_contact_fields'),
+
+Field::make('contact_first_name')
+    ->conditional('show_contact_fields')
+```
+
+If you want to check on a specific value, you can add the second parameter
+```php
+CheckboxField::make('show_contact_fields'),
+
+Field::make('contact_first_name')
+    ->conditional('show_contact_fields', false)
+```
+
+If you want full control, add a closure as the second parameter, you have access to a couple of variables in this closure, as seen here:
+```php
+CheckboxField::make('show_contact_fields'),
+
+Field::make('contact_first_name')
+    ->conditional('show_contact_fields', (function($value, $key, $fields) {
+        /**
+         * $value  // The value of the field you are checking on
+         * $key    // The key name of the field (show_contact_fields in this example)
+         * $fields // All the other fields in the form
+         */
+        return ($value === 'Superman' && $fields['first_name'] === 'Clark')
+    })
+```
+
+#### <a name="custom-component"></a>Custom component
+If you want full control of your blade file, you can either make a [Custom Field](custom-fields.md) or call a different blade file like so:
+```php
+Field::make('field_name')
+    ->component('components.fields.custom_field')
+```
+
+#### <a name="validation"></a>Validation
 You can also pass along rules, just like you would anywhere else in Laravel:
 ```php
 Field::make('field_name')
     ->rules('required_if:fields.contact_info,true')
 ```
+```
+
+#### Default values
+You can define a default value for your field by adding the `value` or `default` function.
+```php
+Field::make('field_name')
+    ->value('Clark Kent')
+```
+
+#### Specific blade variables
 Should you, for whatever reason, require a specific variable for a field, you can pass along anything you like. This can be useful for Frontend, should they require certain class names for a field.
 ```php
 Field::make('field_name')
@@ -30,35 +107,7 @@ You can then call this data in the blade file:
 ```php
 {{ $field->superman }}
 ```
-If you want full control of your blade file, you can either make a [Custom Field](custom-fields.md) or call a different blade file like so:
-```php
-Field::make('field_name')
-    ->component('components.fields.custom_field')
-```
-You can define a default value for your field by adding the `value` or `default` function.
-```php
-Field::make('field_name')
-    ->value('Clark Kent')
-```
 
----
-
-1. [Button](#button)
-2. [Checkbox](#checkbox)
-3. [Conditional](#conditional)
-4. [Country](#country)
-5. [Date](#date)
-6. [Email](#email)
-7. [File](#file)
-8. [Hidden](#hidden)
-9. [Row](#row)
-10. [RadioGroup](#radio-group)
-11. [Password](#password)
-12. [Select](#select)
-13. [Step](#step)
-14. [Textarea](#textarea)
-15. [Text](#text)
-16. [Title](#title)
 ---
 ### <a name="button"></a>Button
 
@@ -93,27 +142,6 @@ CheckboxField::make('contact_me')
 ```
 
 ---
-### <a name="conditional"></a>Conditional
-The conditional field is used to show certain fields when needed.
-For example, in a billing form, you could have a checkbox that says "Use a different billing address".
-This can be achieved by using the conditional field.
-```php
-CheckboxField::make('billing_address'),
-
-Conditional::make(
-    'billing_address',
-    true,
-    [
-        TextField::make('contact_email')
-            ->rules('required')
-    ]
-]),
-```
-The first argument is the field name that the conditional field is going to check, the second parameter is the value it will check for. In this example, it will check if `'billing_address'` equals `true` (aka checked). If so, the fields in the third parameter will be shown.
-
-If you **also** need to show fields when `'billing_address'` equals `false`, you can pass an array of fields as the fourth parameter, just like the third parameter. These will be shown if the check does not pass.
-
----
 ### <a name="date"></a>Date
 The date field returns a basic HTML5 datepicker.
 ```php
@@ -141,6 +169,22 @@ FileField::make('file_id')
     ->disk('private')
 ```
 **Note:** it is important that you make the fieldname an `_id`, as this package returns an Attachment ID when saving the file.
+
+---
+### <a name="group"></a>Group
+A group passes all variables it has to its fields, for example, if you need to make a bunch of fields conditional, and they need to have a certain prefix, you can create a Group like this:
+```php
+Group::make()
+    ->prefix('contact')
+    ->conditional('contact_info')
+    ->rules('required')
+    ->groupFields([
+            TextField::make('first_name'),
+            TextField::make('last_name'),
+            TextField::make('email'),
+            TextField::make('phone'),
+    ]),
+```
 
 ---
 ### <a name="hidden"></a>Hidden
