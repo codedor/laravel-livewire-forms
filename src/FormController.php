@@ -26,11 +26,15 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null)
+    public function mount($component = null, $form = null, $model = null)
     {
         session()->remove('step');
         session()->remove('form-fields');
-        $this->component = $component;
+
+        $this->component = $component ?? $this->component;
+        $this->form = $form ?? $this->form;
+        $this->model = $model ?? $this->model;
+
         $this->locale = app()->getLocale();
         $this->validation = $this->form::validation();
         $this->step = 1;
@@ -152,6 +156,8 @@ class FormController extends Component
                 $field = null;
             }
         }
+
+        $this->fields['locale'] = $this->locale;
     }
 
     public function saveUploadedFiles()
