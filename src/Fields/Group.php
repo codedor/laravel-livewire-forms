@@ -45,7 +45,9 @@ class Group extends Field
                     $this->passVariables($field->fields);
                 } else {
                     foreach ($this->groupVariables as $key => $value) {
-                        $field->{$key} = $value;
+                        if (!isset($field->{$key})) {
+                            $field->{$key} = $value;
+                        }
                     }
                 }
             }

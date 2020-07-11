@@ -21,4 +21,3 @@ php artisan vendor:publish --tag="livewire-forms"
 
 ## TODO
 * parseField() in the field itself for special custom cases, maybe
-* Group rules cannot be overwritten yet
