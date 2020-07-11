@@ -10,7 +10,7 @@ abstract class Field
 
     public function render()
     {
-        if ($this->checkConditional()) {
+        if ($this->conditionalCheck()) {
             return view($this->component, [
                 'field' => $this
             ]);
@@ -20,12 +20,12 @@ abstract class Field
     public function __construct($name, $label = null)
     {
         $this->name = $name;
-        $this->label = $label ?? ucfirst($name);
+        $this->label = $label ?? ucfirst(str_replace('_', ' ', $name));
     }
 
     public static function make($name = '', $label = null)
     {
-        return new static($name);
+        return new static($name, $label);
     }
 
     public function __get($name)
@@ -48,24 +48,37 @@ abstract class Field
 
     public function getName()
     {
+        $name = $this->name;
+
         if (isset($this->prefix)) {
-            return "{$this->prefix}_{$this->name}";
+            return "{$this->prefix}_{$name}";
         }
 
-        return $this->name;
+        if (isset($this->suffix)) {
+            return "{$name}_{$this->suffix}";
+        }
+
+        return $name;
     }
 
-    public function fields()
+    public function getValue($doConditionalChecks = false)
     {
-        return [$this];
+        if ($doConditionalChecks && !$this->conditionalCheck()) {
+            return $this->getDefaultValueOrNull();
+        }
+
+        return session(
+            "form-fields.{$this->getName()}",
+            $this->getDefaultValueOrNull()
+        );
     }
 
-    public function getValue()
+    public function getDefaultValueOrNull()
     {
-        return session("form-fields.{$this->name}");
+        return $this->default ?? $this->value ?? null;
     }
 
-    public function checkConditional()
+    public function conditionalCheck()
     {
         if (!$this->conditional) {
             return true;
@@ -88,4 +101,5 @@ abstract class Field
 
         return false;
     }
+
 }

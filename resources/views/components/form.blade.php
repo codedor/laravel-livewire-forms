@@ -1,5 +1,5 @@
 <form wire:submit.prevent="submit">
-    @foreach($form::getFields() as $field)
+    @foreach($form::fields() as $field)
         {{ optional($field)->render() }}
     @endforeach
 </form>
