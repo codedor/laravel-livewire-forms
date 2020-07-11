@@ -1,4 +1,4 @@
-@if ($field->step === session('step'))
+@if ($field->step === $step)
     @foreach ($field->fields as $_field)
         {{ $_field->render() }}
     @endforeach

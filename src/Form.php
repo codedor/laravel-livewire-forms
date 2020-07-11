@@ -65,6 +65,20 @@ abstract class Form
         return $rules->toArray();
     }
 
+    public static function stepValidation($step): array
+    {
+        $fields = collect(static::fields())
+            ->filter(function($value) use ($step) {
+                return $value->step === $step;
+            })
+            ->first()
+            ->fields;
+
+        return static::validation(
+                collect(static::fieldStack(true, $fields))
+            );
+    }
+
     // Get the file fields
     public static function fileFieldStack()
     {
