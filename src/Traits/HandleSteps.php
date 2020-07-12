@@ -2,19 +2,19 @@
 
 namespace Codedor\LivewireForms\Traits;
 
-trait HasSteps
+trait HandleSteps
 {
     public $step = 1;
 
     public function nextStep()
     {
         $this->validateStep();
-        $this->step++;
+        $this->step = session('step') + 1;
     }
 
     public function previousStep()
     {
-        $this->step--;
+        $this->step = session('step') - 1;
     }
 
     public function goToStep($index)
@@ -26,8 +26,8 @@ trait HasSteps
 
     public function validateStep($step = null)
     {
-        // $validation = $this->form::stepValidation($step ?? $this->step);
-        // $this->validate($validation);
+        $validation = $this->form::stepValidation($step ?? $this->step);
+        $this->validate($validation);
     }
 
 }

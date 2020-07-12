@@ -2,17 +2,18 @@
 
 namespace Codedor\LivewireForms;
 
+use Codedor\LivewireForms\Traits\HandleFiles;
+use Codedor\LivewireForms\Traits\HandleSteps;
 use Codedor\LivewireForms\Traits\HandleSubmit;
-use Codedor\LivewireForms\Traits\HasSteps;
-use Illuminate\Support\Facades\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class FormController extends Component
 {
-    use WithFileUploads,
+    use HandleFiles,
+        HandleSteps,
         HandleSubmit,
-        HasSteps;
+        WithFileUploads;
 
     public $form;
     public $model;
@@ -29,24 +30,26 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null)
+    public function mount($component = null, $form = null)
     {
+        $this->form = $this->form ?? $form;
         $this->locale = $this->locale ?? app()->getLocale();
         $this->component = $component ?? 'livewire-forms::form-steps';
         $this->setValidation();
 
         // if ($this->saveHistory) {
+        session()->remove('step');
         session()->remove('form-fields');
         // }
     }
 
     public function render()
     {
+        session()->put('step', $this->step);
         $this->setFields();
         $this->setValidation();
 
         session()->put('form-fields', $this->fields);
-        View::share('step', $this->step);
 
         return view($this->component);
     }
@@ -67,6 +70,8 @@ class FormController extends Component
                 // Get value with conditional checks
                 $this->fields[$field->getName()] = $field->getValue(true);
             });
+
+        $this->fields['locale'] = $this->locale;
     }
 
     // Get and set the validation rules

@@ -11,14 +11,4 @@ class Row extends Field
         $this->fields = $fields;
         $this->label = $label ?? '';
     }
-
-    public static function make($fields = '', $label = null)
-    {
-        return new static($fields);
-    }
-
-    public function getNestedFields()
-    {
-        return $this->fields;
-    }
 }

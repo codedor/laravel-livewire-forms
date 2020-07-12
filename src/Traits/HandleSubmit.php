@@ -12,8 +12,8 @@ trait HandleSubmit
         // Validate
         $this->validateData();
 
-        // Save uploaded files
-        // $this->saveUploadedFiles();
+        // Save uploaded files (HandleFiles trait)
+        $this->saveUploadedFiles();
 
         // Save the model
         $this->saveData();
@@ -36,22 +36,6 @@ trait HandleSubmit
     public function validateData()
     {
         $this->validate($this->validation);
-    }
-
-    public function saveUploadedFiles()
-    {
-        $fileFields = $this->form::fileFieldStack();
-
-        // Set it to null, otherwise it's an empty string
-        foreach (array_keys($fileFields->toArray()) as $key) {
-            $this->fields[$key] = null;
-        }
-
-        foreach ($this->files ?? [] as $key => $file) {
-            $field = $fileFields[$key] ?? [];
-            $file = $file->upload($field->disk ?? 'public');
-            $this->fields[$key] = $file->id;
-        }
     }
 
     public function saveData()

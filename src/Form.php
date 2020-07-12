@@ -75,8 +75,9 @@ abstract class Form
             ->filter(function($value) use ($step) {
                 return $value->step === $step;
             })
-            ->first()
-            ->fields;
+            ->first();
+
+        $fields = static::getFieldStackFromField($fields);
 
         return static::validation(
                 collect(static::fieldStack(true, $fields))
@@ -86,6 +87,14 @@ abstract class Form
     // Get the file fields
     public static function fileFieldStack()
     {
-        dd(static::fieldStack());
+        $fields = [];
+        collect(static::fieldStack())
+            ->each(function ($value) use (&$fields) {
+                if ($value->containsFile) {
+                    $fields[$value->getName()] = $value;
+                }
+            });
+
+        return $fields;
     }
 }

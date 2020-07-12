@@ -63,14 +63,18 @@ abstract class Field
 
     public function getValue($doConditionalChecks = false)
     {
+        $value = null;
+
         if ($doConditionalChecks && !$this->conditionalCheck()) {
-            return $this->getDefaultValueOrNull();
+            $value = $this->getDefaultValueOrNull();
+        } else {
+            $value = session(
+                "form-fields.{$this->getName()}",
+                $this->getDefaultValueOrNull()
+            );
         }
 
-        return session(
-            "form-fields.{$this->getName()}",
-            $this->getDefaultValueOrNull()
-        );
+        return ($value === 'null') ? null : $value;
     }
 
     public function getDefaultValueOrNull()
@@ -100,5 +104,10 @@ abstract class Field
         }
 
         return false;
+    }
+
+    public function getNestedFields()
+    {
+        return $this->fields ?? $this;
     }
 }
