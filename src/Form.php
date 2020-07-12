@@ -2,28 +2,32 @@
 
 namespace Codedor\LivewireForms;
 
+use Codedor\LivewireForms\Fields\Field;
+
 abstract class Form
 {
     abstract public static function fields();
 
-    public static function getFields()
-    {
-        $fields = collect(static::fields());
-        foreach ($fields as &$field) {
-            $field = $field->fields();
-        }
-
-        return $fields;
-    }
-
-    // Return only the fields and nested fields (without Row, Group, ...)
-    public static function fieldStack($stack = null): array
+    /**
+     * Return only the fields and nested fields (without Row, Group, ...)
+     * @param boolean $doConditionalChecks  Return all the fields, or filter them on conditionals
+     * @param array   $stack                Return the fieldStack of a stack of fields
+     */
+    public static function fieldStack($doConditionalChecks = false, $stack = null): array
     {
         $fields = collect([]);
         collect($stack ?? static::fields())
-            ->each(function($field) use (&$fields) {
-                $fields = $fields->merge(self::getFieldStackFromField($field));
+            ->each(function ($field) use (&$fields) {
+                if (!isset($field->isField)) {
+                    $fields = $fields->merge(static::getFieldStackFromField($field));
+                }
             });
+
+        if ($doConditionalChecks) {
+            $fields = $fields->filter(function ($field) {
+                return $field->conditionalCheck();
+            });
+        }
 
         return $fields->toArray();
     }
@@ -32,34 +36,35 @@ abstract class Form
     {
         $return = collect([]);
         if (isset($field->fields)) {
-            foreach ($field->fields() as $field) {
-                $return->push(self::getFieldStackFromField($field));
+            foreach ($field->getNestedFields() as $field) {
+                if (!isset($field->isField)) {
+                    $return->push(static::getFieldStackFromField($field));
+                }
             }
         } else {
-            $return->push($field);
+            if (!isset($field->isField)) {
+                $return->push($field);
+            }
         }
 
         return $return->flatten();
     }
 
-    public static function validation($stack = null): array
+    // Get the validation rules
+    public static function validation($stack = null, $skipChecks = false): array
     {
         $rules = collect([]);
         $fields = $stack ?? collect(static::fieldStack());
 
-        $fields->filter(function($value) {
-                return (optional($value)->isField !== false);
-            })
-            ->filter(function($field) {
-                return $field->checkConditional();
-            })
-            ->each(function($value) use (&$rules) {
+        $fields->each(function(Field $value) use (&$rules, $skipChecks) {
+            if ($skipChecks ||$value->conditionalCheck()) {
                 if ($value->containsFile) {
                     $rules->put('files.' . $value->getName(), $value->rules ?? '');
                 } else {
                     $rules->put('fields.' . $value->getName(), $value->rules ?? '');
                 }
-            });
+            }
+        });
 
         return $rules->toArray();
     }
@@ -70,11 +75,26 @@ abstract class Form
             ->filter(function($value) use ($step) {
                 return $value->step === $step;
             })
-            ->first()
-            ->fields;
+            ->first();
+
+        $fields = static::getFieldStackFromField($fields);
 
         return static::validation(
-                collect(static::fieldStack($fields))
+                collect(static::fieldStack(true, $fields))
             );
+    }
+
+    // Get the file fields
+    public static function fileFieldStack()
+    {
+        $fields = [];
+        collect(static::fieldStack())
+            ->each(function ($value) use (&$fields) {
+                if ($value->containsFile) {
+                    $fields[$value->getName()] = $value;
+                }
+            });
+
+        return $fields;
     }
 }

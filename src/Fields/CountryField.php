@@ -2,10 +2,9 @@
 
 namespace Codedor\LivewireForms\Fields;
 
-class CountryField extends Field
+class CountryField extends SelectField
 {
     public $component = 'livewire-forms::fields.select';
-    public $options = [];
 
     public function __construct($name, $label = null)
     {

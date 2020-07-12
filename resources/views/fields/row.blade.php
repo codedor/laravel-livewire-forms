@@ -1,5 +1,5 @@
 <div class="{{ $field->divClass ?? 'row' }}">
-    @foreach ($field->fields as $_field)
+    @foreach ($field->getNestedFields() as $_field)
         {{ $_field->render() }}
     @endforeach
 </div>

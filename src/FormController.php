@@ -2,23 +2,27 @@
 
 namespace Codedor\LivewireForms;
 
+use Codedor\LivewireForms\Traits\HandleFiles;
+use Codedor\LivewireForms\Traits\HandleSteps;
+use Codedor\LivewireForms\Traits\HandleSubmit;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class FormController extends Component
 {
-    use WithFileUploads;
+    use HandleFiles,
+        HandleSteps,
+        HandleSubmit,
+        WithFileUploads;
 
-    public $component;
-    public $fields;
-    public $files;
     public $form;
-    public $locale;
     public $model;
-    public $savedModel;
-    public $step;
 
+    public $locale = null;
+    public $component;
+    public $fields = [];
     public $validation = [];
+    // public $saveHistory = false;
 
     public function hydrate()
     {
@@ -26,47 +30,28 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null, $form = null, $model = null)
+    public function mount($component = null, $form = null)
     {
+        $this->form = $this->form ?? $form;
+        $this->locale = $this->locale ?? app()->getLocale();
+        $this->component = $component ?? 'livewire-forms::form-steps';
+        $this->setValidation();
+
+        // if ($this->saveHistory) {
         session()->remove('step');
         session()->remove('form-fields');
-
-        $this->component = $component ?? $this->component;
-        $this->form = $form ?? $this->form;
-        $this->model = $model ?? $this->model;
-
-        $this->locale = app()->getLocale();
-        $this->validation = $this->form::validation();
-        $this->step = 1;
-
-        // Get fields and default values
-        $this->fields = $this->getFields()
-            ->mapWithKeys(function($value) {
-                $value = optional($value);
-                return [$value->getName() => $value->value ?? $value->default ?? ''];
-            })
-            ->toArray();
-
-        $this->fields['locale'] = $this->locale;
+        // }
     }
 
-    public function getFields()
+    public function render()
     {
-        return collect($this->form::fieldStack())
-            ->filter(function($value) {
-                return (optional($value)->isField !== false);
-            });
-    }
+        session()->put('step', $this->step);
+        $this->setFields();
+        $this->setValidation();
 
-    public function getFileFields()
-    {
-        return $this->getFields()
-            ->filter(function($value) {
-                return $value->containsFile;
-            })
-            ->mapWithKeys(function ($value) {
-                return [$value->getName() => $value];
-            });
+        session()->put('form-fields', $this->fields);
+
+        return view($this->component);
     }
 
     public function updated($field)
@@ -74,127 +59,24 @@ class FormController extends Component
         $this->validateOnly($field, $this->validation);
     }
 
-    public function render()
+    // Get and set the fields and the values
+    public function setFields()
     {
-        session()->put('step', $this->step);
         session()->put('form-fields', $this->fields);
 
-        return view($this->component ?? 'livewire-forms::form');
-    }
-
-    public function nextStep()
-    {
-        $this->validateStep();
-        $this->step++;
-    }
-
-    public function previousStep()
-    {
-        $this->step--;
-    }
-
-    public function goToStep($index)
-    {
-        if ($index <= $this->step) {
-            $this->step = $index;
-        }
-    }
-
-    public function validateStep($step = null)
-    {
-        $validation = $this->form::stepValidation($step ?? $this->step);
-        $this->validate($validation);
-    }
-
-    public function submit()
-    {
-        // Parse special fields
-        $this->beforeSubmit();
-
-        // Validate
-        $this->validateData();
-
-        // Parse and remove unneeded conditional data
-        $this->parseConditionalData();
-
-        // Save uploaded files
-        $this->saveUploadedFiles();
-
-        // Save the model
-        $this->saveData();
-
-        // Success message
-        $this->successMessage();
-
-        // Do other things, like mails
-        $this->afterSubmit();
-
-        // Reset form
-        $this->resetForm();
-    }
-
-    public function validateData()
-    {
-        $this->validate($this->validation);
-    }
-
-    public function beforeSubmit()
-    {
-        //
-    }
-
-    public function parseConditionalData()
-    {
-        $fields = $this->getFields()->mapWithKeys(function ($field) {
-            return [$field->getName() => $field];
-        })->filter(function ($field) {
-            return $field->checkConditional();
-        });
-
-        foreach ($this->fields as $key => &$field) {
-            if (!isset($fields[$key])) {
-                $field = null;
-            }
-        }
+        // Get every field without conditional checks
+        collect($this->form::fieldStack(false))
+            ->each(function ($field) {
+                // Get value with conditional checks
+                $this->fields[$field->getName()] = $field->getValue(true);
+            });
 
         $this->fields['locale'] = $this->locale;
     }
 
-    public function saveUploadedFiles()
+    // Get and set the validation rules
+    public function setValidation()
     {
-        $fileFields = $this->getFileFields();
-
-        // Set it to null, otherwise it's an empty string
-        foreach (array_keys($fileFields->toArray()) as $key) {
-            $this->fields[$key] = null;
-        }
-
-        foreach ($this->files ?? [] as $key => $file) {
-            $field = $fileFields[$key] ?? [];
-            $file = $file->upload($field->disk ?? 'public');
-            $this->fields[$key] = $file->id;
-        }
-    }
-
-    public function saveData()
-    {
-        if ($this->model) {
-            $this->savedModel = $this->model::create($this->fields);
-        }
-    }
-
-    public function resetForm()
-    {
-        $this->mount($this->form, $this->model, $this->component);
-    }
-
-    public function successMessage()
-    {
-        session()->flash('message', __('form.success message'));
-    }
-
-    public function afterSubmit()
-    {
-        //
+        $this->validation = $this->form::validation();
     }
 }

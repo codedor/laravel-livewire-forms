@@ -10,7 +10,7 @@ abstract class Field
 
     public function render()
     {
-        if ($this->checkConditional()) {
+        if ($this->conditionalCheck()) {
             return view($this->component, [
                 'field' => $this
             ]);
@@ -20,12 +20,12 @@ abstract class Field
     public function __construct($name, $label = null)
     {
         $this->name = $name;
-        $this->label = $label ?? ucfirst($name);
+        $this->label = $label ?? ucfirst(str_replace('_', ' ', $name));
     }
 
     public static function make($name = '', $label = null)
     {
-        return new static($name);
+        return new static($name, $label);
     }
 
     public function __get($name)
@@ -48,24 +48,46 @@ abstract class Field
 
     public function getName()
     {
+        $name = $this->name;
+
         if (isset($this->prefix)) {
-            return "{$this->prefix}_{$this->name}";
+            $name = "{$this->prefix}_{$name}";
         }
 
-        return $this->name;
+        if (isset($this->suffix)) {
+            $name = "{$name}_{$this->suffix}";
+        }
+
+        return $name;
     }
 
-    public function fields()
+    public function getValue($doConditionalChecks = false)
     {
-        return [$this];
+        $value = null;
+
+        if ($doConditionalChecks && !$this->conditionalCheck()) {
+            $value = $this->getDefaultValueOrNull();
+        } else {
+            $value = session(
+                "form-fields.{$this->getName()}",
+                $this->getDefaultValueOrNull()
+            );
+        }
+
+        return ($value === 'null') ? null : $value;
     }
 
-    public function getValue()
+    public function getLabel()
     {
-        return session("form-fields.{$this->name}");
+        return $this->label;
     }
 
-    public function checkConditional()
+    public function getDefaultValueOrNull()
+    {
+        return $this->default ?? $this->value ?? null;
+    }
+
+    public function conditionalCheck()
     {
         if (!$this->conditional) {
             return true;
@@ -87,5 +109,10 @@ abstract class Field
         }
 
         return false;
+    }
+
+    public function getNestedFields()
+    {
+        return $this->fields ?? $this;
     }
 }

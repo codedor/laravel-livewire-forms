@@ -1,0 +1,33 @@
+<?php
+
+namespace Codedor\LivewireForms\Traits;
+
+trait HandleSteps
+{
+    public $step = 1;
+
+    public function nextStep()
+    {
+        $this->validateStep();
+        $this->step = session('step') + 1;
+    }
+
+    public function previousStep()
+    {
+        $this->step = session('step') - 1;
+    }
+
+    public function goToStep($index)
+    {
+        if ($index <= $this->step) {
+            $this->step = $index;
+        }
+    }
+
+    public function validateStep($step = null)
+    {
+        $validation = $this->form::stepValidation($step ?? $this->step);
+        $this->validate($validation);
+    }
+
+}
