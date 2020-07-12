@@ -51,4 +51,5 @@ These are the basics of making a custom field, you can now define custom functio
 
 ### Sidenotes
 1. You can get the current value of a field by using `$field->getValue()`.
-2. You can get the name (+ prefix if there is one) of a field by using `$field->getName()`.
+2. You can get the name (+ prefix/suffix if there is one) of a field by using `$field->getName()`.
+2. You can get the label of a field by using `$field->getLabel()`.

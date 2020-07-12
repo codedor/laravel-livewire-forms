@@ -69,7 +69,7 @@ public static function fields(): array
     return [
         Group::make()
             ->rules('required')
-            ->groupFields([
+            ->fields([
                 TextField::make('username')
                     ->label(__('registration.username')),
 
@@ -136,7 +136,7 @@ public static function fields(): array
     return [
         Group::make()
             ->rules('required')
-            ->groupFields([
+            ->fields([
                 Row::make([
                     TextField::make('username')
                         ->label(__('registration.username')),

@@ -45,10 +45,10 @@ class FormController extends Component
 
     public function render()
     {
-        session()->put('step', $this->step);
         $this->setFields();
         $this->setValidation();
 
+        session()->put('step', $this->step);
         session()->put('form-fields', $this->fields);
 
         return view($this->component);

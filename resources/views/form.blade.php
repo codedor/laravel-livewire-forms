@@ -4,6 +4,7 @@
             {{ session('message') }}
         </div>
     @else
+        @include('livewire-forms::components.step-list')
         @include('livewire-forms::components.form')
     @endif
 </div>
