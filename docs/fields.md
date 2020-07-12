@@ -10,6 +10,7 @@ This package has a bunch of fields that come with it, here you can find a list o
 * [Button](#button)
 * [Checkbox](#checkbox)
 * [Country](#country)
+* [Currency](#currency)
 * [Date](#date)
 * [Email](#email)
 * [File](#file)
@@ -131,6 +132,22 @@ CountryField::make('country')
 **Note:** this uses the select field blade file, pass `->component()` with a custom blade file if needed.
 
 ---
+### <a name="currency"></a>Currency
+
+The currency field will put a symbol in front (or back) of the text put in.
+```php
+CurrencyField::make('price')
+    ->symbol('€')
+```
+
+Or you can define something to come after the text.
+```php
+CurrencyField::make('price')
+    ->symbolAfter('$')
+```
+**Note:** this uses the text field blade file, pass `->component()` with a custom blade file if needed.
+
+---
 ### <a name="checkbox"></a>Checkbox
 
 The checkbox fields creates a single checkbox on your form.
@@ -176,7 +193,7 @@ Group::make()
     ->prefix('contact')
     ->conditional('contact_info')
     ->rules('required')
-    ->groupFields([
+    ->fields([
             TextField::make('first_name'),
             TextField::make('last_name'),
             TextField::make('email'),

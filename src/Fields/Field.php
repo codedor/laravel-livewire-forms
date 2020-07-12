@@ -77,6 +77,11 @@ abstract class Field
         return ($value === 'null') ? null : $value;
     }
 
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
     public function getDefaultValueOrNull()
     {
         return $this->default ?? $this->value ?? null;

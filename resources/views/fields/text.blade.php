@@ -6,7 +6,7 @@
         class="{{ $field->class }}"
         id="{{ $field->getName() }}"
         name="{{ $field->getName() }}"
-        placeholder="{{ $field->label }}"
+        placeholder="{{ $field->getLabel() }}"
         wire:model.lazy="fields.{{ $field->getName() }}"
     >
 
