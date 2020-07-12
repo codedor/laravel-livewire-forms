@@ -2,6 +2,8 @@
 
 namespace Codedor\LivewireForms;
 
+use Codedor\LivewireForms\Fields\Field;
+
 abstract class Form
 {
     abstract public static function fields();
@@ -34,7 +36,7 @@ abstract class Form
     {
         $return = collect([]);
         if (isset($field->fields)) {
-            foreach ($field->fields() as $field) {
+            foreach ($field->getNestedFields() as $field) {
                 if (!isset($field->isField)) {
                     $return->push(static::getFieldStackFromField($field));
                 }
@@ -49,16 +51,18 @@ abstract class Form
     }
 
     // Get the validation rules
-    public static function validation($stack = null): array
+    public static function validation($stack = null, $skipChecks = false): array
     {
         $rules = collect([]);
         $fields = $stack ?? collect(static::fieldStack());
 
-        $fields->each(function($value) use (&$rules) {
-            if ($value->containsFile) {
-                $rules->put('files.' . $value->getName(), $value->rules ?? '');
-            } else {
-                $rules->put('fields.' . $value->getName(), $value->rules ?? '');
+        $fields->each(function(Field $value) use (&$rules, $skipChecks) {
+            if ($skipChecks ||$value->conditionalCheck()) {
+                if ($value->containsFile) {
+                    $rules->put('files.' . $value->getName(), $value->rules ?? '');
+                } else {
+                    $rules->put('fields.' . $value->getName(), $value->rules ?? '');
+                }
             }
         });
 

@@ -3,6 +3,7 @@
 namespace Codedor\LivewireForms;
 
 use Codedor\LivewireForms\Traits\HandleSubmit;
+use Codedor\LivewireForms\Traits\HasSteps;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -10,7 +11,8 @@ use Livewire\WithFileUploads;
 class FormController extends Component
 {
     use WithFileUploads,
-        HandleSubmit;
+        HandleSubmit,
+        HasSteps;
 
     public $form;
     public $model;
@@ -19,7 +21,7 @@ class FormController extends Component
     public $component;
     public $fields = [];
     public $validation = [];
-    public $step = 1;
+    // public $saveHistory = false;
 
     public function hydrate()
     {
@@ -29,16 +31,20 @@ class FormController extends Component
 
     public function mount($component = null)
     {
-        session()->remove('form-fields');
-
         $this->locale = $this->locale ?? app()->getLocale();
         $this->component = $component ?? 'livewire-forms::form-steps';
         $this->setValidation();
+
+        // if ($this->saveHistory) {
+        session()->remove('form-fields');
+        // }
     }
 
     public function render()
     {
         $this->setFields();
+        $this->setValidation();
+
         session()->put('form-fields', $this->fields);
         View::share('step', $this->step);
 
@@ -67,29 +73,5 @@ class FormController extends Component
     public function setValidation()
     {
         $this->validation = $this->form::validation();
-    }
-
-    public function nextStep()
-    {
-        $this->validateStep();
-        $this->step++;
-    }
-
-    public function previousStep()
-    {
-        $this->step--;
-    }
-
-    public function goToStep($index)
-    {
-        if ($index <= $this->step) {
-            $this->step = $index;
-        }
-    }
-
-    public function validateStep($step = null)
-    {
-        $validation = $this->form::stepValidation($step ?? $this->step);
-        $this->validate($validation);
     }
 }

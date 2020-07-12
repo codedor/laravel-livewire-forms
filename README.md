@@ -12,10 +12,11 @@ php artisan vendor:publish --tag="livewire-forms"
 ```
 
 ## Documentation
+* [Basic Flow](/docs/basic-flow.md)
 * [Creating forms](/docs/creating-forms.md)
 * [Fields](/docs/fields.md)
 * [Custom fields](/docs/custom-fields.md)
-* [Form controller](/docs/form-controller.md)
+* [Form controller](/docs/form-controllers.md)
 * [Form steps](/docs/form-steps.md)
 * [Examples](/docs/examples.md)
 

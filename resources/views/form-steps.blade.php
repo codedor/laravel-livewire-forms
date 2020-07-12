@@ -12,7 +12,7 @@
                             href="#"
                             wire:click.prevent="goToStep({{ $formStep->step }})"
                         >
-                            {{ $formStep->step }} - {{ $formStep->title }}
+                            {{ $formStep->step }} - {{ $formStep->name }}
                         </a>
                     </li>
                 @endif

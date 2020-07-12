@@ -18,13 +18,13 @@ class Group extends Field
         return new static($fields);
     }
 
-    public function fields()
+    public function getNestedFields()
     {
         $this->passVariables($this->fields);
         return $this->fields;
     }
 
-    public function groupFields($fields)
+    public function fields($fields)
     {
         $this->fields = $fields;
         return $this;

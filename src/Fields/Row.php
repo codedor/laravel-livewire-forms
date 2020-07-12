@@ -17,7 +17,7 @@ class Row extends Field
         return new static($fields);
     }
 
-    public function fields()
+    public function getNestedFields()
     {
         return $this->fields;
     }
