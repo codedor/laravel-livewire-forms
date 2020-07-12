@@ -51,11 +51,11 @@ abstract class Field
         $name = $this->name;
 
         if (isset($this->prefix)) {
-            return "{$this->prefix}_{$name}";
+            $name = "{$this->prefix}_{$name}";
         }
 
         if (isset($this->suffix)) {
-            return "{$name}_{$this->suffix}";
+            $name = "{$name}_{$this->suffix}";
         }
 
         return $name;
@@ -101,5 +101,4 @@ abstract class Field
 
         return false;
     }
-
 }

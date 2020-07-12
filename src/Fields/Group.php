@@ -24,12 +24,6 @@ class Group extends Field
         return $this->fields;
     }
 
-    public function fields($fields)
-    {
-        $this->fields = $fields;
-        return $this;
-    }
-
     public function __call($name, $value)
     {
         parent::__call($name, $value);
@@ -37,18 +31,18 @@ class Group extends Field
         return $this;
     }
 
-    public function passVariables(&$fields)
+    public function passVariables($fields)
     {
         if (gettype($fields) === 'array') {
-            foreach ($fields as &$field) {
+            foreach ($fields as $field) {
+                foreach ($this->groupVariables as $key => $value) {
+                    if ($key !== 'fields' && !isset($field->{$key})) {
+                        $field->{$key} = $value;
+                    }
+                }
+
                 if (isset($field->fields)) {
                     $this->passVariables($field->fields);
-                } else {
-                    foreach ($this->groupVariables as $key => $value) {
-                        if (!isset($field->{$key})) {
-                            $field->{$key} = $value;
-                        }
-                    }
                 }
             }
         }
