@@ -32,7 +32,7 @@ abstract class Form
         return $fields->toArray();
     }
 
-    public static function getFieldStackFromField($field)
+    public static function getFieldStackFromField(Field $field)
     {
         $return = collect([]);
         if (isset($field->fields)) {

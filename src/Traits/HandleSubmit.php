@@ -2,6 +2,8 @@
 
 namespace Codedor\LivewireForms\Traits;
 
+use Codedor\LivewireForms\Fields\Field;
+
 trait HandleSubmit
 {
     public function submit()
@@ -14,6 +16,9 @@ trait HandleSubmit
 
         // Save uploaded files (HandleFiles trait)
         $this->saveUploadedFiles();
+
+        // Set the fields a final time, with conditional checks
+        $this->setFinalFields();
 
         // Save the model
         $this->saveData();
@@ -36,6 +41,12 @@ trait HandleSubmit
     public function validateData()
     {
         $this->validate($this->validation);
+    }
+
+    public function setFinalFields()
+    {
+        $this->fields = [];
+        $this->setFields();
     }
 
     public function saveData()

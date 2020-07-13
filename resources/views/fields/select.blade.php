@@ -7,7 +7,7 @@
         name="{{ $field->getName() }}"
         wire:model.lazy="fields.{{ $field->getName() }}"
     >
-        <option value="null">{{ __('form.select an option') }}</option>
+        <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)
             <option value="{{ $key }}">{{ $value }}</option>
         @endforeach

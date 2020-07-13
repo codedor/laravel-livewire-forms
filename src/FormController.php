@@ -45,11 +45,11 @@ class FormController extends Component
 
     public function render()
     {
-        $this->setFields();
-        $this->setValidation();
-
         session()->put('step', $this->step);
         session()->put('form-fields', $this->fields);
+
+        $this->setFields();
+        $this->setValidation();
 
         return view($this->component);
     }
@@ -60,15 +60,13 @@ class FormController extends Component
     }
 
     // Get and set the fields and the values
-    public function setFields()
+    public function setFields($doCheck = true)
     {
-        session()->put('form-fields', $this->fields);
-
-        // Get every field without conditional checks
-        collect($this->form::fieldStack(false))
-            ->each(function ($field) {
-                // Get value with conditional checks
-                $this->fields[$field->getName()] = $field->getValue(true);
+        collect($this->form::fieldStack($doCheck))
+            ->each(function ($field) use ($doCheck) {
+                if (!$doCheck || $field->conditionalCheck()) {
+                    $this->fields[$field->getName()] = $field->getValue();
+                }
             });
 
         $this->fields['locale'] = $this->locale;

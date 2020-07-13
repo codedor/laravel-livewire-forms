@@ -74,7 +74,7 @@ abstract class Field
             );
         }
 
-        return ($value === 'null') ? null : $value;
+        return $value;
     }
 
     public function getLabel()
