@@ -26,7 +26,7 @@ trait HandleSteps
 
     public function validateStep($step = null)
     {
-        $validation = $this->form::stepValidation($step ?? $this->step);
+        $validation = $this->getForm()->stepValidation($step ?? $this->step);
         $this->validate($validation);
     }
 

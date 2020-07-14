@@ -2,9 +2,11 @@
 
 namespace Codedor\LivewireForms;
 
+use Codedor\LivewireForms\Fields\Field;
 use Codedor\LivewireForms\Traits\HandleFiles;
 use Codedor\LivewireForms\Traits\HandleSteps;
 use Codedor\LivewireForms\Traits\HandleSubmit;
+use Exception;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -15,14 +17,18 @@ class FormController extends Component
         HandleSubmit,
         WithFileUploads;
 
-    public $form;
-    public $model;
+    public $formClass;
+    public $modelClass;
 
     public $locale = null;
     public $component;
     public $fields = [];
     public $validation = [];
+    public $uniqueFormId;
     // public $saveHistory = false;
+
+    protected $fieldStack = [];
+    protected $form = null;
 
     public function hydrate()
     {
@@ -30,28 +36,32 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null, $form = null)
+    public function mount($component = null, $formClass = null)
     {
-        $this->form = $this->form ?? $form;
+        $this->formClass = $formClass ?? $this->formClass;
         $this->locale = $this->locale ?? app()->getLocale();
-        $this->component = $component ?? 'livewire-forms::form-steps';
-        $this->setValidation();
+        $this->component = $component ?? 'livewire-forms::form';
 
-        // if ($this->saveHistory) {
-        session()->remove('step');
-        session()->remove('form-fields');
-        // }
+        if (!$this->formClass) {
+            throw new Exception('Did not pass a $formClass in the FormController or blade file.');
+        }
     }
 
     public function render()
     {
-        session()->put('step', $this->step);
         session()->put('form-fields', $this->fields);
+        session()->put('step', $this->step);
+
+        session()->remove('livewire-form.field-counter');
+        $this->form = $this->getForm();
+        $this->fieldStack = $this->form->fieldStack(false);
 
         $this->setFields();
         $this->setValidation();
 
-        return view($this->component);
+        return view($this->component, [
+            'form' => $this->form
+        ]);
     }
 
     public function updated($field)
@@ -62,8 +72,8 @@ class FormController extends Component
     // Get and set the fields and the values
     public function setFields($doCheck = true)
     {
-        collect($this->form::fieldStack($doCheck))
-            ->each(function ($field) use ($doCheck) {
+        collect($this->fieldStack)
+            ->each(function (Field $field) use ($doCheck) {
                 if (!$doCheck || $field->conditionalCheck()) {
                     $this->fields[$field->getName()] = $field->getValue();
                 }
@@ -75,6 +85,11 @@ class FormController extends Component
     // Get and set the validation rules
     public function setValidation()
     {
-        $this->validation = $this->form::validation();
+        $this->validation = $this->getForm()->validation();
+    }
+
+    public function getForm()
+    {
+        return (new $this->formClass);
     }
 }

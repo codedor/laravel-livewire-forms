@@ -4,9 +4,13 @@ namespace Codedor\LivewireForms\Fields;
 
 use Closure;
 
-abstract class Field
+class Field
 {
     public $containsFile = false;
+
+    public $groupPrefixes = [];
+
+    public $uniqueId;
 
     public function render()
     {
@@ -21,6 +25,7 @@ abstract class Field
     {
         $this->name = $name;
         $this->label = $label ?? ucfirst(str_replace('_', ' ', $name));
+        $this->uniqueId = uniqid();
     }
 
     public static function make($name = '', $label = null)
@@ -46,7 +51,12 @@ abstract class Field
         return $this;
     }
 
-    public function getName()
+    public function getUniqueId()
+    {
+        return $this->uniqueId;
+    }
+
+    public function getName($usePrefixes = true)
     {
         $name = $this->name;
 
@@ -56,6 +66,10 @@ abstract class Field
 
         if (isset($this->suffix)) {
             $name = "{$name}_{$this->suffix}";
+        }
+
+        if ($usePrefixes && $this->groupPrefixes !== []) {
+            return implode('.', $this->groupPrefixes) . '.' . $name;
         }
 
         return $name;

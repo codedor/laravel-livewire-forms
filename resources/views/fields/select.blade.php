@@ -9,7 +9,9 @@
     >
         <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)
-            <option value="{{ $key }}">{{ $value }}</option>
+            <option value="{{ $field->useValueAsKeys ? $value : $key  }}">
+                {{ $value }}
+            </option>
         @endforeach
     </select>
 

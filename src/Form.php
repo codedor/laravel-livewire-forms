@@ -6,20 +6,27 @@ use Codedor\LivewireForms\Fields\Field;
 
 abstract class Form
 {
-    abstract public static function fields();
+    public $fields = null;
+
+    abstract public function fields();
+
+    public function __construct()
+    {
+        $this->fields = $this->fields();
+    }
 
     /**
      * Return only the fields and nested fields (without Row, Group, ...)
      * @param boolean $doConditionalChecks  Return all the fields, or filter them on conditionals
      * @param array   $stack                Return the fieldStack of a stack of fields
      */
-    public static function fieldStack($doConditionalChecks = false, $stack = null): array
+    public function fieldStack($doConditionalChecks = false, $stack = null): array
     {
         $fields = collect([]);
-        collect($stack ?? static::fields())
+        collect($stack ?? $this->fields ?? $this->fields())
             ->each(function ($field) use (&$fields) {
                 if (!isset($field->isField)) {
-                    $fields = $fields->merge(static::getFieldStackFromField($field));
+                    $fields = $fields->merge($this->getFieldStackFromField($field));
                 }
             });
 
@@ -32,13 +39,13 @@ abstract class Form
         return $fields->toArray();
     }
 
-    public static function getFieldStackFromField(Field $field)
+    public function getFieldStackFromField(Field $field)
     {
         $return = collect([]);
         if (isset($field->fields)) {
             foreach ($field->getNestedFields() as $field) {
                 if (!isset($field->isField)) {
-                    $return->push(static::getFieldStackFromField($field));
+                    $return->push($this->getFieldStackFromField($field));
                 }
             }
         } else {
@@ -51,13 +58,13 @@ abstract class Form
     }
 
     // Get the validation rules
-    public static function validation($stack = null, $skipChecks = false): array
+    public function validation($stack = null, $skipChecks = false): array
     {
         $rules = collect([]);
-        $fields = $stack ?? collect(static::fieldStack());
+        $fields = $stack ?? collect($this->fieldStack());
 
         $fields->each(function(Field $value) use (&$rules, $skipChecks) {
-            if ($skipChecks ||$value->conditionalCheck()) {
+            if ($skipChecks || $value->conditionalCheck()) {
                 if ($value->containsFile) {
                     $rules->put('files.' . $value->getName(), $value->rules ?? '');
                 } else {
@@ -69,26 +76,26 @@ abstract class Form
         return $rules->toArray();
     }
 
-    public static function stepValidation($step): array
+    public function stepValidation($step): array
     {
-        $fields = collect(static::fields())
+        $fields = collect($this->fields())
             ->filter(function($value) use ($step) {
                 return $value->step === $step;
             })
             ->first();
 
-        $fields = static::getFieldStackFromField($fields);
+        $fields = $this->getFieldStackFromField($fields);
 
-        return static::validation(
-                collect(static::fieldStack(true, $fields))
+        return $this->validation(
+                collect($this->fieldStack(true, $fields))
             );
     }
 
     // Get the file fields
-    public static function fileFieldStack()
+    public function fileFieldStack()
     {
         $fields = [];
-        collect(static::fieldStack())
+        collect($this->fieldStack())
             ->each(function ($value) use (&$fields) {
                 if ($value->containsFile) {
                     $fields[$value->getName()] = $value;

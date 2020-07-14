@@ -1,5 +1,5 @@
 <ul>
-    @foreach($form::fields() as $formStep)
+    @foreach($form->fields as $formStep)
         @if (isset($formStep->step))
             <li>
                 <a

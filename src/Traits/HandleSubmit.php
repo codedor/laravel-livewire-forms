@@ -3,6 +3,7 @@
 namespace Codedor\LivewireForms\Traits;
 
 use Codedor\LivewireForms\Fields\Field;
+use Illuminate\Support\Str;
 
 trait HandleSubmit
 {
@@ -46,13 +47,20 @@ trait HandleSubmit
     public function setFinalFields()
     {
         $this->fields = [];
+        $this->fieldStack = $this->getForm()->fieldStack(false);
         $this->setFields();
+
+        $this->fields = collect($this->fields)
+            ->mapWithKeys(function ($value, $key) {
+                return [Str::afterLast($key, '.') => $value];
+            })
+            ->toArray();
     }
 
     public function saveData()
     {
-        if ($this->model) {
-            $this->savedModel = $this->model::create($this->fields);
+        if ($this->modelClass) {
+            $this->savedModel = $this->modelClass::create($this->fields);
         }
     }
 

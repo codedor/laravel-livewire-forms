@@ -8,14 +8,11 @@ class Group extends Field
 
     public $groupVariables = [];
 
-    public function __construct($fields = '', $label = null)
+    public function __call($name, $value)
     {
-        $this->fields = $fields;
-    }
-
-    public static function make($fields = '', $label = null)
-    {
-        return new static($fields);
+        parent::__call($name, $value);
+        $this->groupVariables[$name] = $this->{$name};
+        return $this;
     }
 
     public function getNestedFields()
@@ -24,17 +21,20 @@ class Group extends Field
         return $this->fields;
     }
 
-    public function __call($name, $value)
+    public function getName($usePrefixes = true)
     {
-        parent::__call($name, $value);
-        $this->groupVariables[$name] = $this->{$name};
-        return $this;
+        return $this->name;
     }
 
     public function passVariables($fields)
     {
         if (gettype($fields) === 'array') {
             foreach ($fields as $field) {
+                $name = $this->getName(false);
+                if ($name !== '' && !in_array($name, $field->groupPrefixes)) {
+                    $field->groupPrefixes[] = $name;
+                }
+
                 foreach ($this->groupVariables as $key => $value) {
                     if ($key !== 'fields' && !isset($field->{$key})) {
                         $field->{$key} = $value;

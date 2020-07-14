@@ -8,7 +8,7 @@ trait HandleFiles
 
     public function saveUploadedFiles()
     {
-        $fileFields = $this->form::fileFieldStack();
+        $fileFields = $this->getForm()->fileFieldStack();
 
         // Set it to null, otherwise it's an empty string
         foreach (array_keys($fileFields) as $key) {
