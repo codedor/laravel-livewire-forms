@@ -9,7 +9,12 @@
     >
         <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)
-            <option value="{{ $field->useValueAsKeys ? $value : $key  }}">
+            <option
+                value="{{ $field->useValueAsKeys ? $value : $key  }}"
+                @if($field->default === $key)
+                selected
+                @endif
+            >
                 {{ $value }}
             </option>
         @endforeach
