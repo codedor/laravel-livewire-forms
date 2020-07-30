@@ -8,6 +8,9 @@
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         wire:model.lazy="fields.{{ $field->getName() }}"
+        @if($field->readOnly)
+        disabled
+        @endif
     >
 
     @include('livewire-forms::fields.error')
