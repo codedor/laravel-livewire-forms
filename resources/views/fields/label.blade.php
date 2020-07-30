@@ -1,3 +1,6 @@
-<label for="{{ $field->getName() }}">
-    {{ $field->getLabel() }}
+<label
+    for="{{ $field->getName() }}"
+    class="{{ $field->labelClass }} {{ ($field->getValue() ? 'changed' : '') }}"
+>
+    {{ $field->label }}
 </label>
