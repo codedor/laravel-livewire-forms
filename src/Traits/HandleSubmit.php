@@ -15,11 +15,11 @@ trait HandleSubmit
         // Validate
         $this->validateData();
 
-        // Save uploaded files (HandleFiles trait)
-        $this->saveUploadedFiles();
-
         // Set the fields a final time, with conditional checks
         $this->setFinalFields();
+
+        // Save uploaded files (HandleFiles trait)
+        $this->saveUploadedFiles();
 
         // Save the model
         $this->saveData();

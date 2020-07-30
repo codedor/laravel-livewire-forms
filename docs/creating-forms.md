@@ -105,13 +105,13 @@ class RegistrationForm extends FormController
 We need to tell livewire what form to load, do this by adding the `$form` attribute.
 
 ```php
-public $form = \App\Forms\RegistrationForm::class;
+public $formClass = \App\Forms\RegistrationForm::class;
 ```
 
 We also need to tell livewire what model we are saving.
 This is optional, however in this case we need to define the `User` model
 ```php
-public $model = \App\Models\User::class;
+public $modelClass = \App\Models\User::class;
 ```
 
 ## <a name="showing-the-form"></a>Showing the form
