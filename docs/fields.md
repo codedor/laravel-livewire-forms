@@ -254,6 +254,22 @@ SelectField::make('field_name')
         'three' => 'Number three'
     ])
 ```
+You can also use a closure for the options, where you can gather data from other fields.
+```php
+SelectField::make('field_name')
+    ->options(function ($fields) {
+        $options = [
+            'batman' => 'Bruce Wayne',
+            'flash' => 'Barry West',
+        ];
+        
+        if ($fields['other_field'] === 'Superman') {
+            $options['superman'] = 'Clark Kent';
+        }
+        
+        return $options;
+    })
+```
 
 ---
 ### <a name="step"></a>Step
