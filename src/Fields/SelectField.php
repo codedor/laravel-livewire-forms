@@ -2,6 +2,8 @@
 
 namespace Codedor\LivewireForms\Fields;
 
+use Closure;
+
 class SelectField extends Field
 {
     public $component = 'livewire-forms::fields.select';
@@ -9,4 +11,15 @@ class SelectField extends Field
     public $options = [];
 
     public $value = '';
+
+    public function options($options)
+    {
+        if ($options instanceof Closure) {
+            $this->options = call_user_func($options, optional(session('form-fields', [])));
+        } else {
+            $this->options = $options;
+        }
+
+        return $this;
+    }
 }
