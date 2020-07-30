@@ -63,7 +63,7 @@ abstract class Form
         $rules = collect([]);
         $fields = $stack ?? collect($this->fieldStack());
 
-        $fields->each(function(Field $value) use (&$rules, $skipChecks) {
+        $fields->each(function (Field $value) use (&$rules, $skipChecks) {
             if ($skipChecks || $value->conditionalCheck()) {
                 if ($value->containsFile) {
                     $rules->put('files.' . $value->getName(), $value->rules ?? '');
@@ -78,17 +78,24 @@ abstract class Form
 
     public function stepValidation($step): array
     {
+
+        $fields = $this->getStepFields($step);
+
+        return $this->validation(
+            collect($this->fieldStack(true, $fields))
+        );
+    }
+
+    public function getStepFields($step)
+    {
         $fields = collect($this->fields())
-            ->filter(function($value) use ($step) {
+            ->filter(function ($value) use ($step) {
                 return $value->step === $step;
             })
             ->first();
-
         $fields = $this->getFieldStackFromField($fields);
 
-        return $this->validation(
-                collect($this->fieldStack(true, $fields))
-            );
+        return $fields;
     }
 
     // Get the file fields
