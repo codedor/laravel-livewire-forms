@@ -86,7 +86,6 @@ You can also pass along rules, just like you would anywhere else in Laravel:
 Field::make('field_name')
     ->rules('required_if:fields.contact_info,true')
 ```
-```
 
 #### Default values
 You can define a default value for your field by adding the `value` or `default` function.
