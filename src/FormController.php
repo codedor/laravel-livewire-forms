@@ -60,8 +60,8 @@ class FormController extends Component
         $this->setFields();
         $this->setValidation();
 
-        View::share('files', $this->files);
-        View::share('fields', $this->fields);
+        View::share('files_', $this->files);
+        View::share('fields_', $this->fields);
 
         return view($this->component, [
             'form' => $this->form
