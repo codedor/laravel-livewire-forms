@@ -7,6 +7,7 @@ use Codedor\LivewireForms\Traits\HandleFiles;
 use Codedor\LivewireForms\Traits\HandleSteps;
 use Codedor\LivewireForms\Traits\HandleSubmit;
 use Exception;
+use Illuminate\Support\Facades\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -59,6 +60,9 @@ class FormController extends Component
         $this->setFields();
         $this->setValidation();
 
+        View::share('files', $this->files);
+        View::share('fields', $this->fields);
+
         return view($this->component, [
             'form' => $this->form
         ]);
@@ -66,6 +70,7 @@ class FormController extends Component
 
     public function updated($field)
     {
+        $this->setValidation();
         $this->validateOnly($field, $this->validation);
     }
 

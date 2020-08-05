@@ -41,6 +41,7 @@ trait HandleSubmit
 
     public function validateData()
     {
+        $this->setValidation();
         $this->validate($this->validation);
     }
 
