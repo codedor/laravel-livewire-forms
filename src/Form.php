@@ -111,4 +111,17 @@ abstract class Form
 
         return $fields;
     }
+
+    public function stepFileFieldStack($step)
+    {
+        $fields = [];
+        collect($this->getStepFields($step))
+            ->each(function ($value) use (&$fields) {
+                if ($value->containsFile) {
+                    $fields[$value->getName()] = $value;
+                }
+            });
+
+        return $fields;
+    }
 }

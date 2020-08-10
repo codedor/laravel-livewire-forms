@@ -6,10 +6,10 @@ trait HandleFiles
 {
     public $files = [];
 
-    public function saveUploadedFiles()
+    public function saveUploadedFiles($step = null)
     {
-        $fileFields = $this->getForm()->fileFieldStack();
-
+        $fileFields = $step ? $this->getForm()->stepFileFieldStack($step)
+            : $this->getForm()->fileFieldStack();
         // Set it to null, otherwise it's an empty string
         foreach (array_keys($fileFields) as $key) {
             $this->fields[$key] = null;
