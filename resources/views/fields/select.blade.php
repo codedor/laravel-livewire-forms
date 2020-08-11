@@ -8,8 +8,11 @@
         @if($field->readOnly)
         disabled
         @endif
+        @if($field->multiple)
+        multiple
+        @endif
     >
-        <option value="">{{ __('form.select an option') }}</option>
+        @if(!$field->multiple)<option value="">{{ __('form.select an option') }}</option>@endif
         @foreach ($field->options as $key => $value)
             <option
                 value="{{ $field->useValueAsKeys ? $value : $key  }}"
