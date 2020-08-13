@@ -15,6 +15,8 @@ class ImageField extends Field
     {
         $value = parent::getValue($doConditionalChecks);
 
+        // dd($value);
+
         if ($value === '') {
             return $value;
         }
