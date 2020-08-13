@@ -2,7 +2,6 @@
 
 namespace Codedor\LivewireForms\Fields;
 
-use Codedor\LinkPicker\LinkPickerRoute;
 use Codedor\Media\Models\Attachment;
 
 class ImageField extends Field
@@ -15,8 +14,6 @@ class ImageField extends Field
     {
         $value = parent::getValue($doConditionalChecks);
 
-        // dd($value);
-
         if ($value === '') {
             return $value;
         }
@@ -26,11 +23,5 @@ class ImageField extends Field
         }
 
         return $value;
-    }
-
-    public function isJson($value)
-    {
-        json_decode($value);
-        return (json_last_error() == JSON_ERROR_NONE);
     }
 }
