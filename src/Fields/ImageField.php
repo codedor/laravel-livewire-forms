@@ -3,6 +3,7 @@
 namespace Codedor\LivewireForms\Fields;
 
 use Codedor\Media\Models\Attachment;
+use Livewire\TemporaryUploadedFile;
 
 class ImageField extends Field
 {
@@ -10,8 +11,11 @@ class ImageField extends Field
 
     public $value = false;
 
+    public $containsFile = true;
+
     public function getValue($doConditionalChecks = false)
     {
+
         $value = parent::getValue($doConditionalChecks);
 
         if ($value === '') {
@@ -19,9 +23,10 @@ class ImageField extends Field
         }
 
         if (Attachment::find($value)) {
-            return Attachment::find($value);
+            return Attachment::find($value)->getFormatOrOriginal($this->format ?? '');
         }
 
         return $value;
     }
+
 }
