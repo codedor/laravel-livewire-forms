@@ -2,15 +2,14 @@
     @include('livewire-forms::fields.label')
 
     <input
+        @include('livewire-forms::fields.binding')
+        id="{{ $field->getUniqueIdName() }}"
         type="{{ $field->type ?? 'text' }}"
         class="{{ $field->class }}"
-        id="{{ $field->getName() }}"
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
-        wire:model.lazy="fields.{{ $field->getName() }}"
-        @if($field->readOnly)
-        disabled
-        @endif
+        value="{{ $field->getValue() }}"
+        @if($field->readOnly) disabled @endif
     >
 
     @include('livewire-forms::fields.error')

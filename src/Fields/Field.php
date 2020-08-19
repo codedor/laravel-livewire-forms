@@ -12,6 +12,8 @@ class Field
 
     public $uniqueId;
 
+    public $binding = 'livewire';
+
     public function render()
     {
         if ($this->conditionalCheck()) {
@@ -75,6 +77,11 @@ class Field
         return $name;
     }
 
+    public function getUniqueIdName()
+    {
+        return $this->getUniqueId() . '_' . $this->getName();
+    }
+
     public function getValue($doConditionalChecks = false)
     {
         $value = null;
@@ -94,6 +101,11 @@ class Field
     public function getLabel()
     {
         return $this->label;
+    }
+
+    public function getBinding()
+    {
+        return session('form-binding') ?? $this->binding ?? null;
     }
 
     public function getDefaultValueOrNull()

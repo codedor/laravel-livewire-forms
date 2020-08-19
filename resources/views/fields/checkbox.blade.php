@@ -1,10 +1,10 @@
 <div class="{{ $field->divClass ?? 'col-6' }} form-group required">
     <input
+        @include('livewire-forms::fields.binding')
+        id="{{ $field->getUniqueIdName() }}"
         type="checkbox"
         class="{{ $field->class }}"
-        id="{{ $field->getName() }}"
         name="{{ $field->getName() }}"
-        wire:model.lazy="fields.{{ $field->getName() }}"
     >
 
     @include('livewire-forms::fields.label')

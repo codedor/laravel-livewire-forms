@@ -1,8 +1,9 @@
 <div>
     <input
+        @include('livewire-forms::fields.binding')
+        id="{{ $field->getUniqueIdName() }}"
         type="hidden"
-        id="{{ $field->getName() }}"
         name="{{ $field->getName() }}"
-        wire:model.lazy="fields.{{ $field->getName() }}"
+        value="{{ $field->getValue() }}"
     >
 </div>

@@ -1,24 +1,18 @@
 <div class="{{ $field->divClass ?? 'col-6' }}">
     @include('livewire-forms::fields.label')
     <select
+        @include('livewire-forms::fields.binding')
+        id="{{ $field->getUniqueIdName() }}"
         class="{{ $field->class }}"
-        id="{{ $field->getName() }}"
         name="{{ $field->getName() }}"
-        wire:model.lazy="fields.{{ $field->getName() }}"
-        @if($field->readOnly)
-        disabled
-        @endif
-        @if($field->multiple)
-        multiple
-        @endif
+        @if($field->readOnly) disabled @endif
+        @if($field->multiple) multiple @endif
     >
         @if(!$field->multiple)<option value="">{{ __('form.select an option') }}</option>@endif
         @foreach ($field->options as $key => $value)
             <option
                 value="{{ $field->useValueAsKeys ? $value : $key  }}"
-                @if($field->default === $key)
-                selected
-                @endif
+                @if($field->getValue() == $key) selected @endif
             >
                 {{ $value }}
             </option>

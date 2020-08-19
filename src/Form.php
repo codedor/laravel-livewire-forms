@@ -7,12 +7,14 @@ use Codedor\LivewireForms\Fields\Field;
 abstract class Form
 {
     public $fields = null;
+    public $binding = 'livewire';
 
     abstract public function fields();
 
     public function __construct()
     {
         $this->fields = $this->fields();
+        session()->put('form-binding', $this->binding);
     }
 
     /**
@@ -78,7 +80,6 @@ abstract class Form
 
     public function stepValidation($step): array
     {
-
         $fields = $this->getStepFields($step);
 
         return $this->validation(
@@ -86,14 +87,19 @@ abstract class Form
         );
     }
 
-    public function getStepFields($step)
+    public function getStepFields($step, $getStack = true)
     {
         $fields = collect($this->fields())
             ->filter(function ($value) use ($step) {
                 return $value->step === $step;
             })
             ->first();
-        $fields = $this->getFieldStackFromField($fields);
+
+        if ($getStack) {
+            $fields = $this->getFieldStackFromField($fields);
+        } else {
+            $fields = optional($fields)->fields;
+        }
 
         return $fields;
     }
