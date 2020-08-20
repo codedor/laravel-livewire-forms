@@ -98,6 +98,11 @@ class Field
         return $value;
     }
 
+    public function getPlaceholder()
+    {
+        return $this->placeholder ?? $this->getLabel();
+    }
+
     public function getLabel()
     {
         return $this->label;
