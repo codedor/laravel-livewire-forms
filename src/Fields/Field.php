@@ -12,8 +12,6 @@ class Field
 
     public $uniqueId;
 
-    public $binding = 'livewire';
-
     public $debounce = 'lazy';
 
     public function render()
