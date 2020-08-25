@@ -12,7 +12,7 @@
     <input
         type="file"
         class="{{ $field->class }}"
-        id="{{ $field->getName() }}"
+        id="{{ $field->getUniqueIdName() }}"
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         wire:model="files.{{ $field->getName() }}"
