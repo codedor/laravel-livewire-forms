@@ -12,7 +12,7 @@
         @foreach ($field->options as $key => $value)
             <option
                 value="{{ $field->useValueAsKeys ? $value : $key  }}"
-                @if($field->getValue() == $key)
+                @if(in_array($key, $field->getValue()))
                     selected
                 @endif
             >

@@ -14,6 +14,8 @@ class Field
 
     public $binding = 'livewire';
 
+    public $debounce = 'lazy';
+
     public function render()
     {
         if ($this->conditionalCheck()) {
@@ -26,7 +28,7 @@ class Field
     public function __construct($name, $label = null)
     {
         $this->name = $name;
-        $this->label = $label ?? ucfirst(str_replace('_', ' ', $name));
+        $this->label = $label ?? $name;
         $this->uniqueId = uniqid();
     }
 
@@ -110,8 +112,8 @@ class Field
 
     public function getBinding()
     {
-        return session('form-binding')
-            ?? $this->binding
+        return $this->binding
+            ?? session('form-binding')
             ?? null;
     }
 
