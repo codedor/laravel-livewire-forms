@@ -1,6 +1,5 @@
 <div class="{{ $field->divClass ?? 'col-6' }} form-group">
     <a
-        @include('livewire-forms::fields.binding')
         id="{{ $field->getUniqueIdName() }}"
         href="{{ $field->getValue() }}"
         class="{{ $field->class }}"
