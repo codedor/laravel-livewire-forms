@@ -5,7 +5,7 @@
         href="{{ $field->getValue() }}"
         class="{{ $field->class }}"
         title="{{ $field->getName() }}"
-        target="{{ $field->openNewTab ? '_blank' : 'self' }}"
+        @if ($field->target) target="{{ $field->target }}" @endif
     >
         {{ $field->label }}
     </a>

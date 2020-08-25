@@ -110,12 +110,17 @@ class Field
 
     public function getBinding()
     {
-        return session('form-binding') ?? $this->binding ?? null;
+        return session('form-binding')
+            ?? $this->binding
+            ?? null;
     }
 
     public function getDefaultValueOrNull()
     {
-        return $this->default ?? $this->value ?? null;
+        return $this->default
+            ?? $this->value
+            ?? $this->getValueFromSession()
+            ?? null;
     }
 
     public function conditionalCheck()
@@ -145,5 +150,10 @@ class Field
     public function getNestedFields()
     {
         return $this->fields ?? $this;
+    }
+
+    public function getValueFromSession()
+    {
+        return session("form-fields.{$this->getName()}");
     }
 }

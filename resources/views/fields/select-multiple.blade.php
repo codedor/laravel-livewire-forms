@@ -5,10 +5,10 @@
         @include('livewire-forms::fields.binding')
         id="{{ $field->getUniqueIdName() }}"
         class="{{ $field->class }}"
-        name="{{ $field->getName() }}"
+        name="{{ $field->getName() }}[]"
         @if($field->readOnly) disabled @endif
+        multiple
     >
-        <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)
             <option
                 value="{{ $field->useValueAsKeys ? $value : $key  }}"

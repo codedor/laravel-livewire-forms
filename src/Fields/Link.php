@@ -4,11 +4,13 @@ namespace Codedor\LivewireForms\Fields;
 
 use Codedor\LinkPicker\LinkPickerRoute;
 
-class LinkField extends Field
+class Link extends Field
 {
     public $component = 'livewire-forms::fields.link';
 
     public $value = false;
+
+    public $isField = false;
 
     public function getValue($doConditionalChecks = false)
     {
@@ -21,7 +23,6 @@ class LinkField extends Field
         // If the value is Json we assume the link is an instance of the nova LinkPicker
         if ($this->isJson($value)) {
             $linkPickerRoute = LinkPickerRoute::fromJson($value);
-
             return $linkPickerRoute->buildForLocale(app()->getLocale());
         }
 
