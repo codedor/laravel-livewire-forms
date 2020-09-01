@@ -3,7 +3,7 @@
 
     <input
         @include('livewire-forms::fields.binding')
-        id="{{ $field->getUniqueIdName() }}"
+        id="{{ $field->getName() }}"
         type="{{ $field->type ?? 'text' }}"
         class="{{ $field->class }}"
         name="{{ $field->getName() }}"

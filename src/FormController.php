@@ -28,8 +28,8 @@ class FormController extends Component
     public $uniqueFormId;
     // public $saveHistory = false;
 
-    protected $fieldStack = [];
     protected $form = null;
+    protected $fieldStack = [];
 
     public function hydrate()
     {
@@ -53,7 +53,6 @@ class FormController extends Component
         session()->put('form-fields', $this->fields);
         session()->put('step', $this->step);
 
-        session()->remove('livewire-form.field-counter');
         $this->form = $this->getForm();
         $this->fieldStack = $this->form->fieldStack(false);
 

@@ -1,7 +1,7 @@
 <div class="{{ $field->divClass ?? 'col-6' }} form-group required">
     <input
         @include('livewire-forms::fields.binding')
-        id="{{ $field->getUniqueIdName() }}"
+        id="{{ $field->getName() }}"
         type="checkbox"
         class="{{ $field->class }}"
         name="{{ $field->getName() }}"
