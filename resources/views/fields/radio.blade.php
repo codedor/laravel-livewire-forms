@@ -5,13 +5,13 @@
                 @include('livewire-forms::fields.binding')
                 type="radio"
                 class="{{ $field->class }}"
-                id="{{ $field->getUniqueIdName() . '.' . $loop->index }}"
+                id="{{ $field->getName() . '.' . $loop->index }}"
                 name="{{ $field->getName() }}"
                 value="{{ $field->useValueAsKeys ? $value : $key }}"
             >
             <label
                 class="{{$field->labelClass}} select-none"
-                for="{{ $field->getUniqueIdName() . '.' . $loop->index }}"
+                for="{{ $field->getName() . '.' . $loop->index }}"
             >
                 {{ $value }}
             </label>

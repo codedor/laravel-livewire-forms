@@ -10,8 +10,6 @@ class Field
 
     public $groupPrefixes = [];
 
-    public $uniqueId;
-
     public $debounce = 'lazy';
 
     public function render()
@@ -27,7 +25,6 @@ class Field
     {
         $this->name = $name;
         $this->label = $label ?? $name;
-        $this->uniqueId = uniqid();
     }
 
     public static function make($name = '', $label = null)
@@ -53,11 +50,6 @@ class Field
         return $this;
     }
 
-    public function getUniqueId()
-    {
-        return $this->uniqueId;
-    }
-
     public function getName($usePrefixes = true)
     {
         $name = $this->name;
@@ -75,11 +67,6 @@ class Field
         }
 
         return $name;
-    }
-
-    public function getUniqueIdName()
-    {
-        return $this->getUniqueId() . '_' . $this->getName();
     }
 
     public function getValue($doConditionalChecks = false)
