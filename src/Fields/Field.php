@@ -10,8 +10,6 @@ class Field
 
     public $groupPrefixes = [];
 
-    public $debounce = 'lazy';
-
     public function render()
     {
         if ($this->conditionalCheck()) {
@@ -100,6 +98,11 @@ class Field
         return $this->binding
             ?? session('form-binding')
             ?? null;
+    }
+
+    public function getDebounce()
+    {
+        return $this->debounce ?? 'lazy';
     }
 
     public function getDefaultValueOrNull()
