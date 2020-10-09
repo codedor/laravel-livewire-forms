@@ -27,6 +27,7 @@ class FormController extends Component
     public $validation = [];
     public $uniqueFormId;
     // public $saveHistory = false;
+    public $syncs = [];
 
     protected $form = null;
     protected $fieldStack = [];

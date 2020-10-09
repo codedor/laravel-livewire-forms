@@ -24,6 +24,9 @@ trait HandleSubmit
         // Save the model
         $this->saveData();
 
+        // Sync any pivot data
+        $this->syncData();
+
         // Success message
         $this->successMessage();
 
@@ -62,6 +65,15 @@ trait HandleSubmit
     {
         if ($this->modelClass) {
             $this->savedModel = $this->modelClass::create($this->fields);
+        }
+    }
+
+    public function syncData()
+    {
+        if ($this->savedModel && !empty($this->syncs)) {
+            foreach ($this->syncs as $relation) {
+                $this->savedModel->{$relation}()->sync($this->fields[$relation]);
+            }
         }
     }
 
