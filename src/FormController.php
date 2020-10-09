@@ -7,6 +7,7 @@ use Codedor\LivewireForms\Traits\HandleFiles;
 use Codedor\LivewireForms\Traits\HandleSteps;
 use Codedor\LivewireForms\Traits\HandleSubmit;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -83,6 +84,11 @@ class FormController extends Component
                     $this->fields[$field->getName()] = $field->getValue();
                 }
             });
+
+        // Check for dot notations
+        foreach ($this->fields as $key => $value) {
+            Arr::set($this->fields, $key, $value);
+        }
 
         $this->fields['locale'] = $this->locale;
     }
