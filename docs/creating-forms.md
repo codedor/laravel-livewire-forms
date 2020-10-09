@@ -5,6 +5,7 @@ In this page we will create a basic registration form, from start to finish.
 * [Defining the form controller](#defining-the-form-controller)
 * [Showing the form](#showing-the-form)
 * [Making prettier forms](#making-prettier-forms)
+* [Multi file uploads](#multi-file-uploads)
 
 ## <a name="defining-the-form-fields"></a>Defining the form fields
 
@@ -162,6 +163,15 @@ Much better!
 Remember: you can always add custom components etc to everything, [or make your own fields](custom-fields.md)!
 
 ![frontend-view](images/frontend-form-pretty.png)
+
+## <a name="multi-file-uploads"></a>Multi file uploads
+When using fields like the [MultiFileField](fields.md#multi-file-field), you'll need to add your relation names to the `$sync` attribute of your form, otherwise your pivot data will not save!
+
+```php
+public $syncs = ['attachments'];
+```
+
+The [syncData step in the FormController](form-controllers.md#sync-data) takes care of the syncing.
 
 ## <a name="something-more"></a>When you need something more
 When your form needs to do something extra special, no worries, you can change how everything works.

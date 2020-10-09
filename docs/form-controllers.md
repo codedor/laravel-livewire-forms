@@ -16,6 +16,7 @@ Functions with a 🦑 next to them are existing Livewire functions.
 * ⚠️🦑 [render()](#render)
 * [resetForm()](#reset-form)
 * [saveData()](#save-data)
+* [syncData()](#sync-data)
 * ⚠️ [saveUploadedFiles()](#save-uploaded-files)
 * ⚠️ [setFields()](#set-fields)
 * ⚠️ [setValidation()](#set-validation)
@@ -101,13 +102,27 @@ This is done at the end of the submit flow.
 ---
 
 ### <a name="save-data"></a> saveData()
-Saves the entered data to the model, if there is one defined, and saves it into `$this->savedModel`, for use in later functions if neede.
+Saves the entered data to the model, if there is one defined, and saves it into `$this->savedModel`, for use in later functions if needed.
 
 ```php
 public function saveData()
 {
     if ($this->model) {
         $this->savedModel = $this->model::create($this->fields);
+    }
+}
+```
+
+### <a name="sync-data"></a> syncData()
+When using fields like the [MultiFileField](fields.md#multi-file-field), you'll need to add your relation names to the `$sync` attribute of your form, otherwise your pivot data will not save.
+
+```php
+public function syncData()
+{
+    if ($this->savedModel && !empty($this->syncs)) {
+        foreach ($this->syncs as $relation) {
+            $this->savedModel->{$relation}()->sync($this->fields[$relation]);
+        }
     }
 }
 ```
@@ -139,6 +154,7 @@ public function submit()
     $this->validateData(); // Validate
     $this->saveUploadedFiles(); // Save uploaded files (HandleFiles trait)
     $this->saveData(); // Save the model
+    $this->syncData(); // Syncs any relation pivot data
     $this->successMessage(); // Success message
     $this->afterSubmit(); // Do other things, like mails
     $this->resetForm(); // Reset form

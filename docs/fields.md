@@ -16,6 +16,7 @@ This package has a bunch of fields that come with it, here you can find a list o
 * [File](#file)
 * [Group](#group)
 * [Hidden](#hidden)
+* [MultiFileField](#multi-file-field)
 * [Row](#row)
 * [RadioGroup](#radio-group)
 * [Password](#password)
@@ -209,6 +210,16 @@ HiddenField::make('user_id')
 ```
 
 ---
+### <a name="multi-file-field"></a>MultiFileField
+The MultiFileField allows you to create a multiple upload field in your form. Note that the name here is your relation name (ex.: `attachments`). You'll also need to add the relation name to the `$syncs` on your form, otherwise the pivot data [won't be saved](creating-forms.md#multi-file-uploads).
+
+```php
+MultiFileField::make('attachments')
+```
+
+Validation for this field is currently not supported.
+
+---
 ### <a name="radio-group"></a>RadioGroup
 Returns a group of radio buttons, pass the different options in the `options` function.
 ```php
@@ -261,11 +272,11 @@ SelectField::make('field_name')
             'batman' => 'Bruce Wayne',
             'flash' => 'Barry West',
         ];
-        
+
         if ($fields['other_field'] === 'Superman') {
             $options['superman'] = 'Clark Kent';
         }
-        
+
         return $options;
     })
 ```
