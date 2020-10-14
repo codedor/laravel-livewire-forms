@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class FormController extends Component
@@ -61,6 +62,8 @@ class FormController extends Component
         $this->setFields();
         $this->setValidation();
 
+        $this->checkFiles();
+
         View::share('files_', $this->files);
         View::share('fields_', $this->fields);
 
@@ -102,5 +105,12 @@ class FormController extends Component
     public function getForm()
     {
         return (new $this->formClass);
+    }
+
+    protected function checkFiles()
+    {
+        if (TemporaryUploadedFile::canUnserialize($this->files)) {
+            $this->files = TemporaryUploadedFile::unserializeFromLivewireRequest($this->files);
+        }
     }
 }

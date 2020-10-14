@@ -8,6 +8,7 @@ Functions with a 🦑 next to them are existing Livewire functions.
 
 * [afterSubmit()](#after-submit)
 * [beforeSubmit()](#before-submit)
+* ⚠️ [checkFiles()](#check-files)
 * ⚠️ [goToStep()](#go-to-step)
 * ⚠️🦑 [hydrate()](#hydrate)
 * ⚠️🦑 [mount()](#mount)
@@ -34,6 +35,11 @@ Right after saving all the data, `afterSubmit()` is called, by default this is e
 
 ### <a name="before-submit"></a> beforeSubmit()
 Just before saving all the data, `beforeSubmit()` is called, by default this is empty.
+
+---
+
+### <a name="check-files"></a> checkFiles()
+This function catches a bug from Livewire, where if you have a multi-file field and trigger a validation error, the files would be lost.
 
 ---
 
@@ -83,13 +89,23 @@ Every time the render function is called, the fields are re-loaded, and conditio
 ```php
 public function render()
 {
+    session()->put('form-fields', $this->fields);
+    session()->put('step', $this->step);
+
+    $this->form = $this->getForm();
+    $this->fieldStack = $this->form->fieldStack(false);
+
     $this->setFields();
     $this->setValidation();
 
-    session()->put('step', $this->step);
-    session()->put('form-fields', $this->fields);
+    $this->checkFiles();
 
-    return view($this->component);
+    View::share('files_', $this->files);
+    View::share('fields_', $this->fields);
+
+    return view($this->component, [
+        'form' => $this->form
+    ]);
 }
 ```
 
