@@ -27,7 +27,7 @@ class RegistrationForm extends Form
 Easy enough, now we need to add the `fields()` function, where we will define our fields.
 
 ```php
-public static function fields(): array
+public function fields(): array
 {
     return [
 
@@ -41,7 +41,7 @@ Read more about the different field types and how to work with them [here](field
 ```php
 use Codedor\LivewireForms\Fields\;
 
-public static function fields(): array
+public function fields(): array
 {
     return [
         TextField::make('username')
@@ -65,7 +65,7 @@ Already we can see there is some duplication of code, namely the `->rules('requi
 We can change this by putting our fields inside of a group, like this:
 
 ```php
-public static function fields(): array
+public function fields(): array
 {
     return [
         Group::make()
@@ -132,7 +132,7 @@ Right now, all the fields are just under each other, we can do better!
 We can define rows to the fields, you can do this by simply adding `Row` fields:
 
 ```php
-public static function fields(): array
+public function fields(): array
 {
     return [
         Group::make()
