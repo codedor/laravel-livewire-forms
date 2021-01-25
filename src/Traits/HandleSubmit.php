@@ -2,7 +2,6 @@
 
 namespace Codedor\LivewireForms\Traits;
 
-use Codedor\LivewireForms\Fields\Field;
 use Illuminate\Support\Str;
 
 trait HandleSubmit
@@ -20,6 +19,9 @@ trait HandleSubmit
 
         // Save uploaded files (HandleFiles trait)
         $this->saveUploadedFiles();
+
+        // Do something just before saving
+        $this->beforeSave();
 
         // Save the model
         $this->saveData();
@@ -59,6 +61,11 @@ trait HandleSubmit
                 return [Str::afterLast($key, '.') => $value];
             })
             ->toArray();
+    }
+
+    public function beforeSave()
+    {
+        //
     }
 
     public function saveData()

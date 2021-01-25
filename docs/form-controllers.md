@@ -7,6 +7,7 @@ You can extend any of these when building your controller, however some of them 
 Functions with a 🦑 next to them are existing Livewire functions.
 
 * [afterSubmit()](#after-submit)
+* [beforeSave()](#before-save)
 * [beforeSubmit()](#before-submit)
 * ⚠️ [checkFiles()](#check-files)
 * ⚠️ [goToStep()](#go-to-step)
@@ -33,8 +34,13 @@ Right after saving all the data, `afterSubmit()` is called, by default this is e
 
 ---
 
+### <a name="before-save"></a> beforeSave()
+Just before saving all the data, `beforeSave()` is called, by default this is empty.
+
+---
+
 ### <a name="before-submit"></a> beforeSubmit()
-Just before saving all the data, `beforeSubmit()` is called, by default this is empty.
+At the start of the saving logic, `beforeSubmit()` is called, by default this is empty.
 
 ---
 
@@ -169,6 +175,7 @@ public function submit()
     $this->beforeSubmit(); // Parse special fields
     $this->validateData(); // Validate
     $this->saveUploadedFiles(); // Save uploaded files (HandleFiles trait)
+    $this->beforeSave(); // Do something just before saving
     $this->saveData(); // Save the model
     $this->syncData(); // Syncs any relation pivot data
     $this->successMessage(); // Success message
