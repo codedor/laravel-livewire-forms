@@ -46,6 +46,7 @@ trait HandleSubmit
 
     public function validateData()
     {
+        $this->flashes = [];
         $this->setValidation();
         $this->validate($this->validation);
     }

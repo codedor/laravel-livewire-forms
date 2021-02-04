@@ -10,6 +10,7 @@ Functions with a 🦑 next to them are existing Livewire functions.
 * [beforeSave()](#before-save)
 * [beforeSubmit()](#before-submit)
 * ⚠️ [checkFiles()](#check-files)
+* [flash()](#flash)
 * ⚠️ [goToStep()](#go-to-step)
 * ⚠️🦑 [hydrate()](#hydrate)
 * ⚠️🦑 [mount()](#mount)
@@ -46,6 +47,17 @@ At the start of the saving logic, `beforeSubmit()` is called, by default this is
 
 ### <a name="check-files"></a> checkFiles()
 This function catches a bug from Livewire, where if you have a multi-file field and trigger a validation error, the files would be lost.
+
+---
+
+### <a name="flash"></a> flash($name, $message)
+This function will push a message into the flashes array, making your message appear in the frontend.
+```php
+public function flash($name, $message)
+{
+    $this->flashes[$name] = $message;
+}
+```
 
 ---
 

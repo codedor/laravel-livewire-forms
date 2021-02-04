@@ -14,6 +14,7 @@ This package has a bunch of fields that come with it, here you can find a list o
 * [Date](#date)
 * [Email](#email)
 * [File](#file)
+* [Flash](#flash)
 * [Group](#group)
 * [Hidden](#hidden)
 * [MultiFileField](#multi-file-field)
@@ -184,6 +185,17 @@ FileField::make('file_id')
     ->disk('private')
 ```
 **Note:** it is important that you make the fieldname an `_id`, as this package returns an Attachment ID when saving the file.
+
+---
+### <a name="flash"></a>Flash
+A Flash field can store a message for you that will stay there until the next `submit` action.
+```php
+Flash::make('auth-errors')
+```
+The name you give will determine how you flash data into the frontend, you can do this by using:
+```php
+$this->flash('auth-errors', 'Wrong password, fool!');
+```
 
 ---
 ### <a name="group"></a>Group

@@ -28,8 +28,8 @@ class FormController extends Component
     public $fields = [];
     public $validation = [];
     public $uniqueFormId;
-    // public $saveHistory = false;
     public $syncs = [];
+    public $flashes = [];
 
     protected $form = null;
     protected $fieldStack = [];
@@ -66,6 +66,7 @@ class FormController extends Component
 
         View::share('files_', $this->files);
         View::share('fields_', $this->fields);
+        View::share('flashes', $this->flashes);
 
         return view($this->component, [
             'form' => $this->form
@@ -105,6 +106,11 @@ class FormController extends Component
     public function getForm()
     {
         return (new $this->formClass);
+    }
+
+    public function flash($name, $message)
+    {
+        $this->flashes[$name] = $message;
     }
 
     protected function checkFiles()
