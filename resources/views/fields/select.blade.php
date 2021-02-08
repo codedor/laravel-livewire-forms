@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }}">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
     @include('livewire-forms::fields.label')
 
     <select
@@ -20,6 +20,12 @@
             </option>
         @endforeach
     </select>
+
+    @includeWhen(
+        $field->tooltip,
+        'livewire-forms::components.tooltip',
+        ['text' => $field->tooltip]
+    )
 
     @include('livewire-forms::fields.error')
 </div>

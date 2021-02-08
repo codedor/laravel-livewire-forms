@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }} form-group">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
     <a
         href="{{ $field->getValue() }}"
         class="{{ $field->class }}"
@@ -7,6 +7,12 @@
     >
         {{ $field->getLabel() }}
     </a>
+
+    @includeWhen(
+        $field->tooltip,
+        'livewire-forms::components.tooltip',
+        ['text' => $field->tooltip]
+    )
 
     @include('livewire-forms::fields.error')
 </div>
