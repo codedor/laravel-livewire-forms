@@ -10,7 +10,6 @@
 
     <script>
         window.addEventListener('form-event-tracking', event => {
-            console.log(event)
             if (typeof window.gtag === 'function') {
                 window.gtag('event', event.detail.event, {
                     event_category: event.detail.category,
