@@ -35,6 +35,8 @@ trait HandleSubmit
         // Do other things, like mails
         $this->afterSubmit();
 
+        $this->dispatchEventTracking();
+
         // Reset form
         $this->resetForm();
     }
@@ -100,4 +102,15 @@ trait HandleSubmit
         //
     }
 
+    public function dispatchEventTracking()
+    {
+        if ($this->eventTrackingData()) {
+            $this->dispatchBrowserEvent('form-event-tracking', $this->eventTrackingData());
+        }
+    }
+
+    public function eventTrackingData(): array
+    {
+        return [];
+    }
 }
