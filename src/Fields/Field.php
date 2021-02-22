@@ -32,7 +32,7 @@ class Field
 
     public function __get($name)
     {
-        return $this->{$name} ?? null;
+        return $this->{$name} ?? config("livewire-forms.defaults.${name}");
     }
 
     public function __call($name, $value)

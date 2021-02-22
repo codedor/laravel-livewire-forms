@@ -10,12 +10,7 @@
         multiple
     >
         @foreach ($field->options as $key => $value)
-            <option
-                value="{{ $field->useValueAsKeys ? $value : $key  }}"
-                @if(in_array($key, $field->getValue()))
-                    selected
-                @endif
-            >
+            <option value="{{ $field->useValueAsKeys ? $value : $key  }}">
                 {{ $value }}
             </option>
         @endforeach
