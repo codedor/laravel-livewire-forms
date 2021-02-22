@@ -75,6 +75,7 @@ class FormController extends Component
 
     public function updated($field)
     {
+        session()->put('form-fields', $this->fields);
         $this->setValidation();
         $this->validateOnly($field, $this->validation);
     }
