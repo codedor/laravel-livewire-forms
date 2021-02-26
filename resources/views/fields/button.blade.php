@@ -6,5 +6,6 @@
         type="submit"
         name="{{ $field->getName() }}"
         value="{{ $field->getName() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 </div>

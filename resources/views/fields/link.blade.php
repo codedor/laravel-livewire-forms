@@ -4,6 +4,7 @@
         class="{{ $field->class }}"
         title="{{ $field->getName() }}"
         @if ($field->target) target="{{ $field->target }}" @endif
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         {{ $field->getLabel() }}
     </a>

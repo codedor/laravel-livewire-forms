@@ -7,6 +7,7 @@
         class="{{ $field->class }}"
         name="{{ $field->getName() }}"
         @if($field->readOnly) disabled @endif
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         <option value="">{{ __('form.select an option') }}</option>
         @foreach ($field->options as $key => $value)

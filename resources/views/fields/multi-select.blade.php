@@ -8,6 +8,7 @@
         name="{{ $field->getName() }}[]"
         @if($field->readOnly) disabled @endif
         multiple
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         @foreach ($field->options as $key => $value)
             <option

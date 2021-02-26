@@ -9,6 +9,7 @@
         placeholder="{{ $field->getLabel() }}"
         wire:model="files.{{ $field->getName() }}"
         multiple
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
     @includeWhen(

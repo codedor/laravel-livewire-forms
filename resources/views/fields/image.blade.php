@@ -7,6 +7,7 @@
         src="{{ isset($files_[$field->getName()]) ? $files_[$field->getName()]->temporaryUrl() : $field->getValue() }}"
         alt="{{ $field->altText ?? optional($field->getValue())->name  }}"
         id="{{ $field->getName() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
     @endif
     <input
@@ -16,6 +17,7 @@
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         wire:model="files.{{ $field->getName() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
     @includeWhen(

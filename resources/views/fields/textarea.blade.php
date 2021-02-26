@@ -7,6 +7,7 @@
         class="{{ $field->class }}"
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     ></textarea>
 
     @includeWhen(

@@ -5,5 +5,6 @@
         type="hidden"
         name="{{ $field->getName() }}"
         value="{{ $field->getValue() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 </div>

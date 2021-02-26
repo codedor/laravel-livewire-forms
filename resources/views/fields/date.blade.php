@@ -10,6 +10,7 @@
         placeholder="{{ $field->getLabel() }}"
         @if($field->readOnly) disabled @endif
         value="{{ $field->getValue() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
     @includeWhen(

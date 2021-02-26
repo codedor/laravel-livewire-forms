@@ -8,6 +8,7 @@
                 id="{{ $field->getName() . '.' . $loop->index }}"
                 name="{{ $field->getName() }}"
                 value="{{ $field->useValueAsKeys ? $value : $key }}"
+                @if ($field->dusk) dusk={{ $field->dusk }} @endif
             >
             <label
                 class="{{$field->labelClass}} select-none"
