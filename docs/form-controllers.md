@@ -32,7 +32,7 @@ Functions with a 🦑 next to them are existing Livewire functions.
 ---
 
 ### <a name="after-submit"></a> afterSubmit()
-Right after saving all the data, `afterSubmit()` is called, by default this is empty.
+Right after saving all the data, `afterSubmit()` is called, by default this will fire a browser event named `form-saved`. This event can be handled with plain JS.
 
 ---
 
