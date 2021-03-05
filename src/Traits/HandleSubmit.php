@@ -99,7 +99,7 @@ trait HandleSubmit
 
     public function afterSubmit()
     {
-        //
+        $this->dispatchBrowserEvent('form-saved');
     }
 
     public function dispatchEventTracking()
