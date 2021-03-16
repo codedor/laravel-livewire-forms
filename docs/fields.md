@@ -22,6 +22,7 @@ This package has a bunch of fields that come with it, here you can find a list o
 * [RadioGroup](#radio-group)
 * [Password](#password)
 * [Select](#select)
+* [Spacer](#spacer)
 * [Step](#step)
 * [Textarea](#textarea)
 * [Text](#text)
@@ -292,6 +293,10 @@ SelectField::make('field_name')
         return $options;
     })
 ```
+
+---
+### <a name="spacer"></a>Spacer
+Adds a `<br>` into the code, this field is made mainly for use in the Form Architect package.
 
 ---
 ### <a name="step"></a>Step
