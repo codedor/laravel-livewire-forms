@@ -1,7 +1,7 @@
 @if ($field->gdpr)
     <button aria-label="GDPR info label" type="button" class="gdpr-field">
         <span class="gdpr-icon">
-            {{ $field->gdprIcon ?? '?' }}
+            {!! $field->gdprIcon ?? '?' !!}
         </span>
 
         <span class="gdpr-info">
