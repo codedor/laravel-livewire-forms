@@ -27,9 +27,9 @@ If you have not used Livewire in your project before, remember to add the follow
 
 
 ## Documentation
-* [Creating forms (start here)](/docs/creating-forms.md)
-* [Fields](/docs/fields.md)
-* [Custom fields](/docs/custom-fields.md)
-* [Form controller](/docs/form-controllers.md)
-* [Form steps](/docs/form-steps.md)
-* [Examples](/docs/examples.md)
+* [Creating forms (start here)](./docs/creating-forms.md)
+* [Fields](./docs/fields.md)
+* [Custom fields](./docs/custom-fields.md)
+* [Form controller](./docs/form-controllers.md)
+* [Form steps](./docs/form-steps.md)
+* [Examples](./docs/examples.md)

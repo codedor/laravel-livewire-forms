@@ -27,11 +27,12 @@ Functions with a 🦑 next to them are existing Livewire functions.
 * [successMessage()](#success-message)
 * [validateData()](#validate-data)
 * ⚠️ [validateStep()](#validate-step)
+* [eventTrackingData()](#event-tracking-data)
 
 ---
 
 ### <a name="after-submit"></a> afterSubmit()
-Right after saving all the data, `afterSubmit()` is called, by default this is empty.
+Right after saving all the data, `afterSubmit()` is called, by default this will fire a browser event named `form-saved`. This event can be handled with plain JS.
 
 ---
 
@@ -216,3 +217,19 @@ Validates every field in the form (including all steps).
 
 ### <a name="validate-step"></a> ⚠️ validateStep($step)
 Validates every field in the given step.
+
+### <a name="event-tracking-data"></a> eventTrackingData()
+
+If you want to send event tracking, you can add this method that returns an array with an event, category, label and value.
+
+```php
+public function eventTrackingData(): array
+{
+    return [
+        'event' => 'sent',
+        'category' => 'Contact',
+        'label' => $this->savedModel->working_title,
+        'value' => 1
+    ];
+}
+```
