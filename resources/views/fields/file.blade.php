@@ -10,5 +10,7 @@
         wire:model="files.{{ $field->getName() }}"
     >
 
+    @include('livewire-forms::fields.gdpr')
+
     @include('livewire-forms::fields.error')
 </div>

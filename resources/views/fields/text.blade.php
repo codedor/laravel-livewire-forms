@@ -12,5 +12,7 @@
         @if($field->readOnly) disabled @endif
     >
 
+    @include('livewire-forms::fields.gdpr')
+
     @include('livewire-forms::fields.error')
 </div>

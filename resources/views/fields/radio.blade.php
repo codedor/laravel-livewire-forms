@@ -1,5 +1,7 @@
 <div class="{{ $field->divClass ?? 'col-6' }} required">
-     @foreach ($field->options as $key => $value)
+    @include('livewire-forms::fields.gdpr')
+
+    @foreach ($field->options as $key => $value)
         <div class="form-group custom-control custom-radio">
             <input
                 @include('livewire-forms::fields.binding')

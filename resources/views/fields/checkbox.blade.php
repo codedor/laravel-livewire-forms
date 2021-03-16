@@ -9,5 +9,7 @@
 
     @include('livewire-forms::fields.label')
 
+    @include('livewire-forms::fields.gdpr')
+
     @include('livewire-forms::fields.error')
 </div>

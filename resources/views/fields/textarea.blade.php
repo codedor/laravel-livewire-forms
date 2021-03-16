@@ -9,5 +9,7 @@
         placeholder="{{ $field->getLabel() }}"
     ></textarea>
 
+    @include('livewire-forms::fields.gdpr')
+
     @include('livewire-forms::fields.error')
 </div>
