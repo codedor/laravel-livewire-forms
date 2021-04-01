@@ -7,7 +7,10 @@
         name="{{ $field->getName() }}"
         @if($field->readOnly) disabled @endif
     >
-        <option value="">{{ __('form.select an option') }}</option>
+        @if($field->nullable)
+            <option value="">{{ $field->localString }}</option>
+        @endif
+
         @foreach ($field->options as $key => $value)
             <option value="{{ $field->useValueAsKeys ? $value : $key }}">
                 {{ $value }}

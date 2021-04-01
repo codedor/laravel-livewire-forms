@@ -12,6 +12,10 @@ class SelectField extends Field
 
     public $value = '';
 
+    public $nullable = false;
+
+    public $localString = '';
+
     public function options($options)
     {
         if ($options instanceof Closure) {
@@ -20,6 +24,13 @@ class SelectField extends Field
             $this->options = $options;
         }
 
+        return $this;
+    }
+
+    public function nullable($localString = null, $nullable = true)
+    {
+        $this->nullable = $nullable;
+        $this->localString = $localString ?? __('form.select an option');
         return $this;
     }
 }
