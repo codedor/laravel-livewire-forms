@@ -293,6 +293,16 @@ SelectField::make('field_name')
         return $options;
     })
 ```
+You are able to make a field nullable and pass a custom localisation string for the nullable option.
+```php
+SelectField::make('field_name')
+    ->options([
+        'first' => 'Number one',
+        'second' => 'Number two',
+        'three' => 'Number three'
+    ])
+    ->nullable(__('contact.select an option'))
+```
 
 ---
 ### <a name="spacer"></a>Spacer
