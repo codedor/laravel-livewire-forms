@@ -1,7 +1,7 @@
 <div class="{{ $field->divClass ?? 'col-6' }}">
     <input
         @if ($field->action)
-            wire:click.prevent="{{ $field->action }}()"
+            wire:click.prevent="{{ $field->action }}"
         @endif
         type="submit"
         name="{{ $field->getName() }}"
