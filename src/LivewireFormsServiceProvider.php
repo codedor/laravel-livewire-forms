@@ -24,4 +24,12 @@ class LivewireFormsServiceProvider extends ServiceProvider
             'livewire-forms'
         );
     }
+
+    public function register()
+    {
+        $this->commands([
+            Console\NewFormCommand::class,
+            Console\NewFormControllerCommand::class
+        ]);
+    }
 }
