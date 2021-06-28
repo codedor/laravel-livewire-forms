@@ -90,6 +90,19 @@ Field::make('field_name')
     ->rules('required_if:fields.contact_info,true')
 ```
 
+If you want to use custom rules, you need to deviate a little bit from Laravel's default.
+Instead of creating a new rule object, you need to pass in the namespace.
+
+```php
+❌
+Field::make('field_name')
+    ->rules(new CustomRule)
+
+✅
+Field::make('field_name')
+    ->rules(CustomRule::class)
+```
+
 #### Default values
 You can define a default value for your field by adding the `value` or `default` function.
 ```php
