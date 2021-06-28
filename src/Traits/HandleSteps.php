@@ -27,7 +27,7 @@ trait HandleSteps
     public function validateStep($step = null)
     {
         $validation = $this->getForm()->stepValidation($step ?? $this->step);
-        $this->validate($validation);
+        $this->validate($this->parseNamespaceRules($validation));
     }
 
 }
