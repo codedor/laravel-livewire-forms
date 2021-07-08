@@ -115,6 +115,14 @@ This is optional, however in this case we need to define the `User` model
 public $modelClass = \App\Models\User::class;
 ```
 
+### Automatic form generation
+If you don't want the hassle of doing everything manual, you can use the following command and it will generate the Form and Controller classes.
+
+```bash
+php artisan form:new RegistrationForm
+```
+
+
 ## <a name="showing-the-form"></a>Showing the form
 Now all that's left is showing the form in the frontend.
 Go to your desired blade file and add this code to it:
