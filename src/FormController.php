@@ -125,6 +125,8 @@ class FormController extends Component
     protected function parseNamespaceRules($rules = [])
     {
         foreach ($rules as $fieldKey => $fieldRules) {
+            if (is_object($fieldRules)) continue;
+
             if (! is_array($fieldRules)) {
                 if (class_exists($fieldRules)) {
                     $rules[$fieldKey] = app($fieldRules);
@@ -133,6 +135,8 @@ class FormController extends Component
             }
 
             foreach ($fieldRules as $ruleKey => $rule) {
+                if (is_object($rule)) continue;
+
                 if (class_exists($rule)) {
                     $rules[$fieldKey][$ruleKey] = app($rule);
                 }
