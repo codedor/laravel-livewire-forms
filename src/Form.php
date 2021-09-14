@@ -8,11 +8,13 @@ abstract class Form
 {
     public $fields = null;
     public $binding = 'livewire';
+    public $formVariables = [];
 
     abstract public function fields();
 
-    public function __construct()
+    public function __construct($formVariables = [])
     {
+        $this->formVariables = $formVariables;
         $this->fields = $this->fields();
         session()->put('form-binding', $this->binding);
     }
