@@ -11,11 +11,7 @@
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
-    @includeWhen(
-        $field->tooltip,
-        'livewire-forms::components.tooltip',
-        ['text' => $field->tooltip]
-    )
+    @include('livewire-forms::fields.gdpr')
 
     @include('livewire-forms::fields.error')
 </div>

@@ -75,8 +75,10 @@ class FormController extends Component
 
     public function updated($field)
     {
+        session()->put('form-fields', $this->fields);
         $this->setValidation();
-        $this->validateOnly($field, $this->validation);
+
+        $this->validateOnly($field, $this->parseNamespaceRules($this->validation));
     }
 
     // Get and set the fields and the values
@@ -118,5 +120,29 @@ class FormController extends Component
         if (TemporaryUploadedFile::canUnserialize($this->files)) {
             $this->files = TemporaryUploadedFile::unserializeFromLivewireRequest($this->files);
         }
+    }
+
+    protected function parseNamespaceRules($rules = [])
+    {
+        foreach ($rules as $fieldKey => $fieldRules) {
+            if (is_object($fieldRules)) continue;
+
+            if (! is_array($fieldRules)) {
+                if (class_exists($fieldRules)) {
+                    $rules[$fieldKey] = app($fieldRules);
+                }
+                continue;
+            }
+
+            foreach ($fieldRules as $ruleKey => $rule) {
+                if (is_object($rule)) continue;
+
+                if (class_exists($rule)) {
+                    $rules[$fieldKey][$ruleKey] = app($rule);
+                }
+            }
+        }
+
+        return $rules;
     }
 }

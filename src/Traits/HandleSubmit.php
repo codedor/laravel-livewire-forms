@@ -50,7 +50,7 @@ trait HandleSubmit
     {
         $this->flashes = [];
         $this->setValidation();
-        $this->validate($this->validation);
+        $this->validate($this->parseNamespaceRules($this->validation));
     }
 
     public function setFinalFields()

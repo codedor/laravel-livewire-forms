@@ -1,0 +1,12 @@
+<?php
+
+namespace DummyNamespace;
+
+use Codedor\LivewireForms\FormController;
+
+class DummyClass extends FormController
+{
+    public $formClass = \App\Forms\DummyClass::class;
+
+    // public $modelClass = Inquiry::class;
+}

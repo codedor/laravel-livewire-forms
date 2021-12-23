@@ -33,4 +33,12 @@ class LivewireFormsServiceProvider extends ServiceProvider
             __DIR__ . '/../config/livewire-forms.php' => config_path('livewire-forms.php'),
         ], 'livewire-forms');
     }
+
+    public function register()
+    {
+        $this->commands([
+            Console\NewFormCommand::class,
+            Console\NewFormControllerCommand::class
+        ]);
+    }
 }

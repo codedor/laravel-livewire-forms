@@ -1,0 +1,15 @@
+<?php
+
+namespace DummyNamespace;
+
+use Codedor\LivewireForms\Form;
+
+class DummyClass extends Form
+{
+    public function fields(): array
+    {
+        return [
+           //
+        ];
+    }
+}

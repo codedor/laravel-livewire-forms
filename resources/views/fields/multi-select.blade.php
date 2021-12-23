@@ -11,22 +11,13 @@
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         @foreach ($field->options as $key => $value)
-            <option
-                value="{{ $field->useValueAsKeys ? $value : $key  }}"
-                @if(in_array($key, $field->getValue()))
-                    selected
-                @endif
-            >
+            <option value="{{ $field->useValueAsKeys ? $value : $key  }}">
                 {{ $value }}
             </option>
         @endforeach
     </select>
 
-    @includeWhen(
-        $field->tooltip,
-        'livewire-forms::components.tooltip',
-        ['text' => $field->tooltip]
-    )
+    @include('livewire-forms::fields.gdpr')
 
     @include('livewire-forms::fields.error')
 </div>

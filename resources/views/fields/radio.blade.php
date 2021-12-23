@@ -1,5 +1,7 @@
-<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
-     @foreach ($field->options as $key => $value)
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }} required">
+    @include('livewire-forms::fields.gdpr')
+
+    @foreach ($field->options as $key => $value)
         <div class="form-group custom-control custom-radio">
             <input
                 @include('livewire-forms::fields.binding')
@@ -18,12 +20,6 @@
             </label>
         </div>
     @endforeach
-
-    @includeWhen(
-        $field->tooltip,
-        'livewire-forms::components.tooltip',
-        ['text' => $field->tooltip]
-    )
 
     @include('livewire-forms::fields.error')
 </div>

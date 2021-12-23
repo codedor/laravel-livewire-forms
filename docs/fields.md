@@ -22,6 +22,7 @@ This package has a bunch of fields that come with it, here you can find a list o
 * [RadioGroup](#radio-group)
 * [Password](#password)
 * [Select](#select)
+* [Spacer](#spacer)
 * [Step](#step)
 * [Textarea](#textarea)
 * [Text](#text)
@@ -87,6 +88,19 @@ You can also pass along rules, just like you would anywhere else in Laravel:
 ```php
 Field::make('field_name')
     ->rules('required_if:fields.contact_info,true')
+```
+
+If you want to use custom rules, you need to deviate a little bit from Laravel's default.
+Instead of creating a new rule object, you need to pass in the namespace.
+
+```php
+❌
+Field::make('field_name')
+    ->rules(new CustomRule)
+
+✅
+Field::make('field_name')
+    ->rules(CustomRule::class)
 ```
 
 #### Default values
@@ -292,6 +306,10 @@ SelectField::make('field_name')
         return $options;
     })
 ```
+
+---
+### <a name="spacer"></a>Spacer
+Adds a `<br>` into the code, this field is made mainly for use in the Form Architect package.
 
 ---
 ### <a name="step"></a>Step

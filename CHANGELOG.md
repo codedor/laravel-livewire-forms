@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2021-07-08
+### Added
+- Added Form generation commands
+- Added possibility to pass custom rule namespace instead of object.
+
+## [2.0.3] - 2021-03-16
+### Added
+- GDPR component
+- Spacer field
+
 ## [2.0.2] - 2021-02-04
 ### Added
 - Flash data and functions
