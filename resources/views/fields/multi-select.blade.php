@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }}">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
     @include('livewire-forms::fields.label')
 
     <select
@@ -8,6 +8,7 @@
         name="{{ $field->getName() }}[]"
         @if($field->readOnly) disabled @endif
         multiple
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         @foreach ($field->options as $key => $value)
             <option value="{{ $field->useValueAsKeys ? $value : $key  }}">

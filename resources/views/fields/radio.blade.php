@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }} required">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }} required">
     @include('livewire-forms::fields.gdpr')
 
     @foreach ($field->options as $key => $value)
@@ -10,6 +10,7 @@
                 id="{{ $field->getName() . '.' . $loop->index }}"
                 name="{{ $field->getName() }}"
                 value="{{ $field->useValueAsKeys ? $value : $key }}"
+                @if ($field->dusk) dusk={{ $field->dusk }} @endif
             >
             <label
                 class="{{$field->labelClass}} select-none"

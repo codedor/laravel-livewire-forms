@@ -15,7 +15,7 @@ class SelectField extends Field
     public function options($options)
     {
         if ($options instanceof Closure) {
-            $this->options = call_user_func($options, optional(session('form-fields', [])));
+            $this->options = call_user_func($options, session('form-fields', []));
         } else {
             $this->options = $options;
         }

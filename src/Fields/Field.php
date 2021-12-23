@@ -124,7 +124,7 @@ class Field
                 $this->conditional[1],
                 session("form-fields.{$this->conditional[0]}"),
                 $this->conditional[0],
-                optional(session('form-fields', []))
+                session('form-fields', [])
             );
         } else {
             if (gettype($this->conditional) === 'array') {

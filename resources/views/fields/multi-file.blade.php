@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }}">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
     @include('livewire-forms::fields.label')
 
     <input
@@ -9,6 +9,7 @@
         placeholder="{{ $field->getLabel() }}"
         wire:model="files.{{ $field->getName() }}"
         multiple
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
     @include('livewire-forms::fields.gdpr')

@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? 'col-6' }}">
+<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
     @include('livewire-forms::fields.label')
 
     @if($field->getValue())
@@ -7,6 +7,7 @@
             src="{{ isset($files_[$field->getName()]) ? $files_[$field->getName()]->temporaryUrl() : $field->getValue() }}"
             alt="{{ $field->altText ?? optional($field->getValue())->name  }}"
             id="{{ $field->getName() }}"
+            @if ($field->dusk) dusk={{ $field->dusk }} @endif
         >
     @endif
 
@@ -17,6 +18,7 @@
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         wire:model="files.{{ $field->getName() }}"
+        @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
 
     @include('livewire-forms::fields.gdpr')
