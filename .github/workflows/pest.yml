@@ -1,0 +1,11 @@
+name: PHPUnit
+
+on: [pull_request]
+
+jobs:
+  call-phpunit:
+    uses: codedor/workflows/.github/workflows/pest.yml@master
+    secrets:
+      REPMAN_TOKEN: ${{ secrets.REPMAN_TOKEN }}
+      NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
+      NOVA_PASSWORD: ${{ secrets.NOVA_PASSWORD }}
