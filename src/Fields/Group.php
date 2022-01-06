@@ -12,12 +12,14 @@ class Group extends Field
     {
         parent::__call($name, $value);
         $this->groupVariables[$name] = $this->{$name};
+
         return $this;
     }
 
     public function getNestedFields()
     {
         $this->passVariables($this->fields);
+
         return $this->fields;
     }
 
@@ -31,12 +33,12 @@ class Group extends Field
         if (gettype($fields) === 'array') {
             foreach ($fields as $field) {
                 $name = $this->getName(false);
-                if ($name !== '' && !in_array($name, $field->groupPrefixes)) {
+                if ($name !== '' && ! in_array($name, $field->groupPrefixes)) {
                     $field->groupPrefixes[] = $name;
                 }
 
                 foreach ($this->groupVariables as $key => $value) {
-                    if ($key !== 'fields' && !isset($field->{$key})) {
+                    if ($key !== 'fields' && ! isset($field->{$key})) {
                         $field->{$key} = $value;
                     }
                 }

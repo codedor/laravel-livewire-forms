@@ -23,6 +23,7 @@ class Link extends Field
         // If the value is Json we assume the link is an instance of the nova LinkPicker
         if ($this->isJson($value)) {
             $linkPickerRoute = LinkPickerRoute::fromJson($value);
+
             return $linkPickerRoute->buildForLocale(app()->getLocale());
         }
 
@@ -32,6 +33,7 @@ class Link extends Field
     public function isJson($value)
     {
         json_decode($value);
+
         return (json_last_error() == JSON_ERROR_NONE);
     }
 }

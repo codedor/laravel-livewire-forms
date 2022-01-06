@@ -38,7 +38,7 @@ class LivewireFormsServiceProvider extends ServiceProvider
     {
         $this->commands([
             Console\NewFormCommand::class,
-            Console\NewFormControllerCommand::class
+            Console\NewFormControllerCommand::class,
         ]);
     }
 }
