@@ -115,6 +115,9 @@ class FormController extends Component
         $this->flashes[$name] = $message;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function checkFiles()
     {
         if (TemporaryUploadedFile::canUnserialize($this->files)) {

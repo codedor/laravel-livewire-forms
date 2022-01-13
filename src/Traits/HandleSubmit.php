@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 
 trait HandleSubmit
 {
+    protected $savedModel;
+
     public function submit()
     {
         // Parse special fields

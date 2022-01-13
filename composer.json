@@ -7,6 +7,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4",
+    "codedor/laravel-media": "^2.0 || ^3.0",
     "pragmarx/countries": "^0.7.0",
     "livewire/livewire": "^2.0"
   },
@@ -40,6 +41,17 @@
   "prefer-stable": true,
   "require-dev": {
     "orchestra/testbench": "^6.23",
-    "pestphp/pest": "^1.21"
-  }
+    "pestphp/pest": "^1.21",
+    "pestphp/pest-plugin-livewire": "^1.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://codedor.repo.repman.io"
+    },
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ]
 }
