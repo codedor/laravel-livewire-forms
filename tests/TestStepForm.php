@@ -27,7 +27,7 @@ class TestStepForm extends Form
                     TextField::make('company'),
                     Button::make('Previous step')->action('previousStep'),
                     Button::make('Submit'),
-                ])
+                ]),
         ];
     }
 }

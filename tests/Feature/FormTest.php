@@ -2,7 +2,6 @@
 
 use Codedor\LivewireForms\Fields\CheckboxField;
 use Codedor\LivewireForms\Fields\Flash;
-use Codedor\LivewireForms\Fields\TextField;
 use Tests\TestForm;
 use Tests\TestStepForm;
 use Tests\TestWithConditionalFieldForm;
@@ -30,7 +29,7 @@ test('form returns field stack with conditional fields', function () {
 
     $this->assertEquals(
         [
-            CheckboxField::make('show_name')
+            CheckboxField::make('show_name'),
         ],
         $form->fieldStack(true)
     );
@@ -91,7 +90,6 @@ test('form sets validation for files', function () {
 });
 
 test('form skips conditional validation', function () {
-
 });
 
 test('form sets validation for steps', function () {
@@ -106,17 +104,13 @@ test('form sets validation for steps', function () {
 });
 
 test('form returns fields for specific step', function () {
-
 });
 
 test('form returns validation for specific step', function () {
-
 });
 
 test('form returns file fields', function () {
-
 });
 
 test('form returns field stack for files for specific step', function () {
-
 });
