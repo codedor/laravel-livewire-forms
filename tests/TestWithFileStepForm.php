@@ -32,7 +32,7 @@ class TestWithFileStepForm extends Form
                         ->disk('public'),
                     Button::make('Previous step')->action('previousStep'),
                     Button::make('Submit'),
-                ])
+                ]),
         ];
     }
 }
