@@ -29,7 +29,7 @@ class TestStepForm extends Form
                         ->rules('required'),
                     Button::make('Previous step')->action('previousStep'),
                     Button::make('Submit'),
-                ])
+                ]),
         ];
     }
 }

@@ -1,21 +1,18 @@
 <?php
 
 use Codedor\LivewireForms\FormController;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Livewire\TemporaryUploadedFile;
+use function Pest\Livewire\livewire;
 use Tests\TestForm;
 use Tests\TestWithComplexValidationForm;
 use Tests\TestWithFileForm;
 use Tests\TestWithFileStepForm;
 use Tests\TestWithFlashForm;
 
-use function Pest\Livewire\livewire;
-
 test('form controller throws exception if formClass is not passed', function () {
-   $this->expectException(Exception::class);
-   livewire(FormController::class);
-   $this->assertException('Did not pass a $formClass in the FormController or blade file.');
+    $this->expectException(Exception::class);
+    livewire(FormController::class);
+    $this->assertException('Did not pass a $formClass in the FormController or blade file.');
 });
 
 test('form controller will render', function () {

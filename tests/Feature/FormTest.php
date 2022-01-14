@@ -34,7 +34,7 @@ test('form returns field stack with conditional fields', function () {
 
     $this->assertEquals(
         [
-            CheckboxField::make('show_name')
+            CheckboxField::make('show_name'),
         ],
         $form->fieldStack(true)
     );

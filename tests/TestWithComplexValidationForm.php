@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Codedor\LivewireForms\Fields\Flash;
 use Codedor\LivewireForms\Fields\TextField;
 use Codedor\LivewireForms\Form;
 use Illuminate\Validation\Rules\RequiredIf;
@@ -19,7 +18,7 @@ class TestWithComplexValidationForm extends Form
             TextField::make('validation_array')
                 ->rules([
                     new RequiredIf(true),
-                    UppercaseRule::class
+                    UppercaseRule::class,
                 ]),
         ];
     }
