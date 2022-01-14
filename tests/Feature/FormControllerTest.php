@@ -7,6 +7,7 @@ use Livewire\TemporaryUploadedFile;
 use Tests\TestForm;
 use Tests\TestWithComplexValidationForm;
 use Tests\TestWithFileForm;
+use Tests\TestWithFileStepForm;
 use Tests\TestWithFlashForm;
 
 use function Pest\Livewire\livewire;
@@ -61,13 +62,13 @@ test('form controller will upload files', function () {
     livewire(FormController::class, [
         'formClass' => TestWithFileForm::class,
     ])
-        ->set('files.image', TemporaryUploadedFile::fake()->image('blaat.jpg'))
+        ->set('files.image', TemporaryUploadedFile::fake()->image('image.jpg'))
         ->assertHasNoErrors('files.image')
         ->call('submit')
         ->assertSee('form.success message');
 
     $this->assertDatabaseHas('attachments', [
-        'filename_without_extension' => 'blaat',
+        'filename_without_extension' => 'image',
         'extension' => 'jpg',
     ]);
 });
@@ -78,4 +79,55 @@ test('form controller will flash', function () {
     ])
         ->call('flash', 'auth-component', 'Wrong password!')
         ->assertSet('flashes.auth-component', 'Wrong password!');
+});
+
+test('form controller can upload multiple files in a form with steps', function () {
+    livewire(FormController::class, [
+        'formClass' => TestWithFileStepForm::class,
+    ])
+        ->set('fields.name', 'field name')
+        ->call('nextStep')
+        ->set('files.image', [
+            TemporaryUploadedFile::fake()->image('image.jpg'),
+            TemporaryUploadedFile::fake()->create('document.pdf', 1024, 'application/pdf'),
+        ])
+        ->assertHasNoErrors('files.image')
+        ->call('submit')
+        ->assertSee('form.success message');
+
+    $this->assertDatabaseCount('attachments', 2);
+    $this->assertDatabaseHas('attachments', [
+        'filename_without_extension' => 'image',
+        'extension' => 'jpg',
+    ]);
+
+    $this->assertDatabaseHas('attachments', [
+        'filename_without_extension' => 'document',
+        'extension' => 'pdf',
+    ]);
+});
+
+test('form controller can upload multiple files in a form for a specific step', function () {
+    livewire(FormController::class, [
+        'formClass' => TestWithFileStepForm::class,
+    ])
+        ->set('fields.name', 'field name')
+        ->call('nextStep')
+        ->set('files.image', [
+            TemporaryUploadedFile::fake()->image('image.jpg'),
+            TemporaryUploadedFile::fake()->create('document.pdf', 1024, 'application/pdf'),
+        ])
+        ->assertHasNoErrors('files.image')
+        ->call('saveUploadedFiles', 2);
+
+    $this->assertDatabaseCount('attachments', 2);
+    $this->assertDatabaseHas('attachments', [
+        'filename_without_extension' => 'image',
+        'extension' => 'jpg',
+    ]);
+
+    $this->assertDatabaseHas('attachments', [
+        'filename_without_extension' => 'document',
+        'extension' => 'pdf',
+    ]);
 });

@@ -30,6 +30,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ]);
 
         $app['config']->set('media.types.image', ['image/jpeg']);
+        $app['config']->set('media.types.document', ['application/pdf']);
         $app['config']->set('media.formats', [
             'thumb' => 'Codedor\Media\Filters\ThumbFilter',
             'low_res' => 'Codedor\Media\Filters\LowResFilter',

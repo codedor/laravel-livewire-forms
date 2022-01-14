@@ -3,11 +3,12 @@
 namespace Tests;
 
 use Codedor\LivewireForms\Fields\Button;
+use Codedor\LivewireForms\Fields\MultiFileField;
 use Codedor\LivewireForms\Fields\Step;
 use Codedor\LivewireForms\Fields\TextField;
 use Codedor\LivewireForms\Form;
 
-class TestStepForm extends Form
+class TestWithFileStepForm extends Form
 {
     public function fields()
     {
@@ -25,8 +26,10 @@ class TestStepForm extends Form
             Step::make('step 2')
                 ->step(2)
                 ->fields([
-                    TextField::make('company')
-                        ->rules('required'),
+                    MultiFileField::make('image')
+                        ->rules('required')
+                        ->format('thumb')
+                        ->disk('public'),
                     Button::make('Previous step')->action('previousStep'),
                     Button::make('Submit'),
                 ])
