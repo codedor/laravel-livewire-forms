@@ -4,10 +4,13 @@ use Codedor\LivewireForms\FormController;
 use Livewire\TemporaryUploadedFile;
 use function Pest\Livewire\livewire;
 use Tests\TestForm;
+use Tests\TestModel;
+use Tests\TestStepForm;
 use Tests\TestWithComplexValidationForm;
 use Tests\TestWithFileForm;
 use Tests\TestWithFileStepForm;
 use Tests\TestWithFlashForm;
+use Tests\TestWithModelForm;
 
 test('form controller throws exception if formClass is not passed', function () {
     $this->expectException(Exception::class);
@@ -127,4 +130,36 @@ test('form controller can upload multiple files in a form for a specific step', 
         'filename_without_extension' => 'document',
         'extension' => 'pdf',
     ]);
+});
+
+test('form controller can go to next and previous step', function () {
+    livewire(FormController::class, [
+        'formClass' => TestStepForm::class,
+    ])
+        ->assertSet('step', 1)
+        ->set('fields.name', 'field name')
+        ->call('nextStep')
+        ->assertSet('step', 2)
+        ->call('previousStep')
+        ->assertSet('step', 1)
+        ->set('fields.name', '')
+        ->call('nextStep')
+        ->assertHasErrors(['fields.name'])
+        ->set('fields.name', 'field name')
+        ->call('nextStep')
+        ->assertSet('step', 2)
+        ->call('goToStep', 1)
+        ->assertSet('step', 1);
+});
+
+test('form controller will create model', function () {
+    $testModel = $this->createMock(TestModel::class);
+    $testModel->expects()->method('create')->once();
+
+    livewire(FormController::class, [
+        'formClass' => TestWithModelForm::class,
+    ])
+        ->set('fields.name', 'field name')
+        ->call('submit')
+        ->assertSee('form.success message');
 });
