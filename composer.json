@@ -7,9 +7,8 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4 || ^8.0",
-    "pragmarx/countries": "^0.8",
-    "pragmarx/ia-collection": "dev-update-var-dumper as 7.1.0",
-    "livewire/livewire": "^1.1 || ^2.0"
+    "livewire/livewire": "^1.1 || ^2.0",
+    "petercoles/multilingual-country-list": "^1.2"
   },
   "autoload": {
     "psr-4": {
@@ -36,11 +35,5 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/asbiin/ia-collection"
-    }
-  ]
+  "prefer-stable": true
 }
