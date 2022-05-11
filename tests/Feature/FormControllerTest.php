@@ -5,7 +5,6 @@ use Livewire\TemporaryUploadedFile;
 use function Pest\Livewire\livewire;
 use Tests\TestForm;
 use Tests\TestFormController;
-use Tests\TestModel;
 use Tests\TestStepForm;
 use Tests\TestWithComplexValidationForm;
 use Tests\TestWithFileForm;
