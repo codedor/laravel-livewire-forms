@@ -76,13 +76,13 @@ If you want full control, add a closure as the second parameter, you have access
 CheckboxField::make('show_contact_fields'),
 
 Field::make('contact_first_name')
-    ->conditional('show_contact_fields', (function($value, $key, $fields) {
+    ->conditional('show_contact_fields', function ($value, $key, $fields) {
         /**
          * $value  // The value of the field you are checking on
          * $key    // The key name of the field (show_contact_fields in this example)
          * $fields // All the other fields in the form
          */
-        return ($value === 'Superman' && $fields['first_name'] === 'Clark')
+        return ($value === 'Superman' && $fields['first_name'] === 'Clark');
     })
 ```
 
