@@ -4,6 +4,7 @@ use Codedor\LivewireForms\FormController;
 use Livewire\TemporaryUploadedFile;
 use function Pest\Livewire\livewire;
 use Tests\TestForm;
+use Tests\TestFormController;
 use Tests\TestModel;
 use Tests\TestStepForm;
 use Tests\TestWithComplexValidationForm;
@@ -153,13 +154,22 @@ test('form controller can go to next and previous step', function () {
 });
 
 test('form controller will create model', function () {
-    $testModel = $this->createMock(TestModel::class);
-    $testModel->expects()->method('create')->once();
-
-    livewire(FormController::class, [
+    livewire(TestFormController::class, [
         'formClass' => TestWithModelForm::class,
     ])
-        ->set('fields.name', 'field name')
+        ->set('fields.extension', 'jpg')
+        ->set('fields.mime_type', 'image/jpg')
+        ->set('fields.md5', 'md5')
+        ->set('fields.type', 'image')
+        ->set('fields.size', 50)
         ->call('submit')
         ->assertSee('form.success message');
+
+    $this->assertDatabaseHas('attachments', [
+        'extension' => 'jpg',
+        'mime_type' => 'image/jpg',
+        'md5' => 'md5',
+        'type' => 'image',
+        'size' => '50',
+    ]);
 });

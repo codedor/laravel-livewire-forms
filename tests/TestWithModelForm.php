@@ -7,12 +7,18 @@ use Codedor\LivewireForms\Form;
 
 class TestWithModelForm extends Form
 {
-    public $modelClass = TestModel::class;
-
     public function fields()
     {
         return [
-            TextField::make('name')
+            TextField::make('extension')
+                ->rules('required'),
+            TextField::make('mime_type')
+                ->rules('required'),
+            TextField::make('md5')
+                ->rules('required'),
+            TextField::make('type')
+                ->rules('required'),
+            TextField::make('size')
                 ->rules('required'),
         ];
     }

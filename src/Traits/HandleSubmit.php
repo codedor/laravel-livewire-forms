@@ -75,7 +75,6 @@ trait HandleSubmit
 
     public function saveData()
     {
-        dump($this->modelClass);
         if ($this->modelClass) {
             $this->savedModel = $this->modelClass::create($this->fields);
         }

@@ -6,7 +6,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.4 || ^8.0",
+    "php": "^8.0",
     "codedor/laravel-media": "^4.0",
     "livewire/livewire": "^2.0",
     "petercoles/multilingual-country-list": "^1.2"
@@ -45,7 +45,8 @@
   "require-dev": {
     "orchestra/testbench": "^6.23 || ^7.0",
     "pestphp/pest": "^1.21",
-    "pestphp/pest-plugin-livewire": "^1.0"
+    "pestphp/pest-plugin-livewire": "^1.0",
+    "pestphp/pest-plugin-mock": "^1.0"
   },
   "repositories": [
     {
