@@ -40,7 +40,7 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null, $formClass = null)
+    public function mount(?string $component = null, ?string $formClass = null)
     {
         $this->formClass = $formClass ?? $this->formClass;
         $this->locale = $this->locale ?? app()->getLocale();
