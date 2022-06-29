@@ -29,7 +29,7 @@ trait HandleFiles
             } else {
                 // Single upload
                 $uploadedFile = $this->uploadFile($fileFields[$key] ?? [], $file);
-                $this->fields[$key] = $file->id ?? null;
+                $this->fields[$key] = $uploadedFile->id ?? null;
             }
         }
     }
