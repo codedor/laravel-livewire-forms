@@ -1,7 +1,7 @@
 <?php
 
 it('returns a collection of countries')
-    ->expect(fn() => getCountryList())
+    ->expect(fn () => getCountryList())
     ->toBeIterable()
     ->toHaveKey('BE', 'Belgium');
 
