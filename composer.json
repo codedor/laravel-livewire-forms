@@ -34,15 +34,15 @@
       "providers": [
         "Codedor\\LivewireForms\\LivewireFormsServiceProvider"
       ]
+    },
+    "branch-alias": {
+      "dev-feature/laravel-9": "3.x-dev"
     }
   },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
       "pestphp/pest-plugin": true
-    },
-    "branch-alias": {
-      "dev-feature/laravel-9": "3.x-dev"
     }
   },
   "minimum-stability": "dev",
