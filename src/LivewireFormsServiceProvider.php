@@ -26,12 +26,12 @@ class LivewireFormsServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [__DIR__ . '/../resources/views' => resource_path('views/vendor/livewire-forms')],
-            'livewire-forms'
+            'laravel-livewire-forms-views'
         );
 
         $this->publishes([
             __DIR__ . '/../config/livewire-forms.php' => config_path('livewire-forms.php'),
-        ], 'livewire-forms');
+        ], 'laravel-livewire-forms-config');
     }
 
     public function register()
