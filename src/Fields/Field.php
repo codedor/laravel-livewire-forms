@@ -14,7 +14,7 @@ class Field
     {
         if ($this->conditionalCheck()) {
             return view($this->component, [
-                'field' => $this
+                'field' => $this,
             ]);
         }
     }
@@ -39,7 +39,7 @@ class Field
     {
         if ($value === []) {
             $this->{$name} = true;
-        } else if (count($value) > 1) {
+        } elseif (count($value) > 1) {
             $this->{$name} = $value;
         } else {
             $this->{$name} = optional($value)[0];
@@ -71,7 +71,7 @@ class Field
     {
         $value = null;
 
-        if ($doConditionalChecks && !$this->conditionalCheck()) {
+        if ($doConditionalChecks && ! $this->conditionalCheck()) {
             $value = $this->getDefaultValueOrNull();
         } else {
             $value = session(
@@ -115,7 +115,7 @@ class Field
 
     public function conditionalCheck()
     {
-        if (!$this->conditional) {
+        if (! $this->conditional) {
             return true;
         }
 

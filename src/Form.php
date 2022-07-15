@@ -19,7 +19,7 @@ abstract class Form
 
     /**
      * Return only the fields and nested fields (without Row, Group, ...)
-     * @param boolean $doConditionalChecks  Return all the fields, or filter them on conditionals
+     * @param bool $doConditionalChecks  Return all the fields, or filter them on conditionals
      * @param array   $stack                Return the fieldStack of a stack of fields
      */
     public function fieldStack($doConditionalChecks = false, $stack = null): array
@@ -27,7 +27,7 @@ abstract class Form
         $fields = collect([]);
         collect($stack ?? $this->fields ?? $this->fields())
             ->each(function ($field) use (&$fields) {
-                if (!isset($field->isField)) {
+                if (! isset($field->isField)) {
                     $fields = $fields->merge($this->getFieldStackFromField($field));
                 }
             });
@@ -46,12 +46,12 @@ abstract class Form
         $return = collect([]);
         if (isset($field->fields)) {
             foreach ($field->getNestedFields() as $field) {
-                if (!isset($field->isField)) {
+                if (! isset($field->isField)) {
                     $return->push($this->getFieldStackFromField($field));
                 }
             }
         } else {
-            if (!isset($field->isField)) {
+            if (! isset($field->isField)) {
                 $return->push($field);
             }
         }

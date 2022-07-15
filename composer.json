@@ -6,8 +6,9 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.4 || ^8.0",
-    "livewire/livewire": "^1.1 || ^2.0",
+    "php": "^7.4 || ^8.0",
+    "codedor/laravel-media": "^3.0 || ^4.0",
+    "livewire/livewire": "^2.0",
     "petercoles/multilingual-country-list": "^1.2"
   },
   "autoload": {
@@ -18,22 +19,43 @@
       "src/helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "extra": {
     "laravel": {
       "providers": [
         "Codedor\\LivewireForms\\LivewireFormsServiceProvider"
       ]
-    },
-    "branch-alias": {
-      "dev-feature/laravel-9": "2.3.0-dev"
     }
   },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
       "pestphp/pest-plugin": true
+    },
+    "branch-alias": {
+      "dev-feature/laravel-9": "3.0-dev"
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require-dev": {
+    "orchestra/testbench": "^6.23 || ^7.0",
+    "pestphp/pest": "^1.21",
+    "pestphp/pest-plugin-livewire": "^1.0",
+    "pestphp/pest-plugin-mock": "^1.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://codedor.repo.repman.io"
+    },
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ]
 }

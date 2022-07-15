@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Cache;
 use PragmaRX\Countries\Package\Countries;
 
-if (!function_exists('getCountryList')) {
+if (! function_exists('getCountryList')) {
     function getCountryList()
     {
         return Cache::rememberForever('form_countries', function () {
@@ -14,7 +14,7 @@ if (!function_exists('getCountryList')) {
     }
 }
 
-if (!function_exists('getCountryName')) {
+if (! function_exists('getCountryName')) {
     function getCountryName($cca2)
     {
         return Cache::rememberForever('form_countries_' . $cca2, function () use ($cca2) {
@@ -25,7 +25,7 @@ if (!function_exists('getCountryName')) {
     }
 }
 
-if (!function_exists('getCountryCode')) {
+if (! function_exists('getCountryCode')) {
     function getCountryCode($name)
     {
         return Countries::where('name.common', $name)
