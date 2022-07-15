@@ -1,35 +1,28 @@
 <?php
 
-use Illuminate\Support\Facades\Cache;
-use PragmaRX\Countries\Package\Countries;
+use Illuminate\Support\Collection;
+use PeterColes\Countries\CountriesFacade;
 
 if (! function_exists('getCountryList')) {
-    function getCountryList()
+    function getCountryList(bool $reverse = false): Collection
     {
-        return Cache::rememberForever('form_countries', function () {
-            return Countries::all()
-                ->pluck('name.common', 'cca2')
-                ->sort();
-        });
+        return CountriesFacade::lookup(app()->getLocale(), $reverse)
+            ->sort();
     }
 }
 
 if (! function_exists('getCountryName')) {
-    function getCountryName($cca2)
+    function getCountryName(string $code)
     {
-        return Cache::rememberForever('form_countries_' . $cca2, function () use ($cca2) {
-            return Countries::where('cca2', $cca2)
-                ->pluck('name.common')
-                ->first();
-        });
+        return getCountryList()
+            ->get($code);
     }
 }
 
 if (! function_exists('getCountryCode')) {
-    function getCountryCode($name)
+    function getCountryCode(string $name)
     {
-        return Countries::where('name.common', $name)
-            ->pluck('cca2')
-            ->first();
+        return getCountryList(true)
+            ->get($name);
     }
 }

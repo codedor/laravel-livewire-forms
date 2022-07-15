@@ -5,6 +5,7 @@ namespace Tests;
 use Codedor\LivewireForms\LivewireFormsServiceProvider;
 use Codedor\Media\Providers\MacroServiceProvider;
 use Livewire\LivewireServiceProvider;
+use PeterColes\Countries\CountriesServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -45,6 +46,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             LivewireServiceProvider::class,
             LivewireFormsServiceProvider::class,
             MacroServiceProvider::class,
+            CountriesServiceProvider::class,
         ];
     }
 
