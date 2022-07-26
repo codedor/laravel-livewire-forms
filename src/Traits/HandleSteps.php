@@ -29,5 +29,4 @@ trait HandleSteps
         $validation = $this->getForm()->stepValidation($step ?? $this->step);
         $this->validate($this->parseNamespaceRules($validation));
     }
-
 }

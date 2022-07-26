@@ -2,6 +2,8 @@
 
 namespace Codedor\LivewireForms\Traits;
 
+use Illuminate\Validation\ValidationException;
+
 trait HandleFiles
 {
     public $files = [];
@@ -21,16 +23,25 @@ trait HandleFiles
             if (is_array($file)) {
                 // Multi upload
                 foreach ($file as $value) {
-                    $field = $fileFields[$key] ?? [];
-                    $_file = $value->upload($field->disk ?? 'public');
-                    $this->fields[$key][] = $_file->id;
+                    $uploadedFile = $this->uploadFile($fileFields[$key] ?? [], $value);
+                    $this->fields[$key][] = $uploadedFile->id ?? null;
                 }
             } else {
                 // Single upload
-                $field = $fileFields[$key] ?? [];
-                $file = $file->upload($field->disk ?? 'public');
-                $this->fields[$key] = $file->id;
+                $uploadedFile = $this->uploadFile($fileFields[$key] ?? [], $file);
+                $this->fields[$key] = $uploadedFile->id ?? null;
             }
+        }
+    }
+
+    private function uploadFile($field, $file)
+    {
+        try {
+            return $file->upload($field->disk ?? 'public');
+        } catch (ValidationException $e) {
+            throw ValidationException::withMessages([
+                'files.' . $field->getName() => $e->getMessage(),
+            ]);
         }
     }
 }

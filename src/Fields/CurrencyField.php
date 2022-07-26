@@ -17,11 +17,11 @@ class CurrencyField extends TextField
             return $value;
         }
 
-        if (!Str::startsWith($value, $this->symbol)) {
+        if (! Str::startsWith($value, $this->symbol)) {
             $value = $this->symbol . $value;
         }
 
-        if (!Str::endsWith($value, $this->symbolAfter)) {
+        if (! Str::endsWith($value, $this->symbolAfter)) {
             $value = $value . $this->symbolAfter;
         }
 

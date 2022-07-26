@@ -15,10 +15,10 @@ use Livewire\WithFileUploads;
 
 class FormController extends Component
 {
-    use HandleFiles,
-        HandleSteps,
-        HandleSubmit,
-        WithFileUploads;
+    use HandleFiles;
+    use HandleSteps;
+    use HandleSubmit;
+    use WithFileUploads;
 
     public $formClass;
     public $modelClass;
@@ -40,13 +40,13 @@ class FormController extends Component
         app()->setLocale($this->locale);
     }
 
-    public function mount($component = null, $formClass = null)
+    public function mount(?string $component = null, ?string $formClass = null)
     {
         $this->formClass = $formClass ?? $this->formClass;
         $this->locale = $this->locale ?? app()->getLocale();
         $this->component = $component ?? 'livewire-forms::form';
 
-        if (!$this->formClass) {
+        if (! $this->formClass) {
             throw new Exception('Did not pass a $formClass in the FormController or blade file.');
         }
     }
@@ -69,7 +69,7 @@ class FormController extends Component
         View::share('flashes', $this->flashes);
 
         return view($this->component, [
-            'form' => $this->form
+            'form' => $this->form,
         ]);
     }
 
@@ -86,7 +86,7 @@ class FormController extends Component
     {
         collect($this->fieldStack)
             ->each(function (Field $field) use ($doCheck) {
-                if (!$doCheck || $field->conditionalCheck()) {
+                if (! $doCheck || $field->conditionalCheck()) {
                     $this->fields[$field->getName()] = $field->getValue();
                 }
             });
@@ -115,6 +115,9 @@ class FormController extends Component
         $this->flashes[$name] = $message;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function checkFiles()
     {
         if (TemporaryUploadedFile::canUnserialize($this->files)) {
@@ -125,17 +128,22 @@ class FormController extends Component
     protected function parseNamespaceRules($rules = [])
     {
         foreach ($rules as $fieldKey => $fieldRules) {
-            if (is_object($fieldRules)) continue;
+            if (is_object($fieldRules)) {
+                continue;
+            }
 
             if (! is_array($fieldRules)) {
                 if (class_exists($fieldRules)) {
                     $rules[$fieldKey] = app($fieldRules);
                 }
+
                 continue;
             }
 
             foreach ($fieldRules as $ruleKey => $rule) {
-                if (is_object($rule)) continue;
+                if (is_object($rule)) {
+                    continue;
+                }
 
                 if (class_exists($rule)) {
                     $rules[$fieldKey][$ruleKey] = app($rule);

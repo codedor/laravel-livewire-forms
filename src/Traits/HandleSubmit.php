@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 
 trait HandleSubmit
 {
+    protected $savedModel;
+
     public function submit()
     {
         // Parse special fields
@@ -80,7 +82,7 @@ trait HandleSubmit
 
     public function syncData()
     {
-        if ($this->savedModel && !empty($this->syncs)) {
+        if ($this->savedModel && ! empty($this->syncs)) {
             foreach ($this->syncs as $relation) {
                 $this->savedModel->{$relation}()->sync($this->fields[$relation]);
             }
