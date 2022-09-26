@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.1.0] - 2022-09-26
+
+### Added
+
+-   Every field has a `getId()` method to return a unique id per field.
+
 ## [v3.0.0] - 2022-07-26
 
 ### Added

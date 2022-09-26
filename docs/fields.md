@@ -6,6 +6,7 @@ This package has a bunch of fields that come with it, here you can find a list o
     -   [Adding a field](#adding-field)
     -   [Conditional fields](#conditional-fields)
     -   [Custom component](#custom-component)
+    -   [Methods](#methods)
     -   [Validation](#validation)
 -   [Button](#button)
 -   [Checkbox](#checkbox)
@@ -100,6 +101,30 @@ If you want full control of your blade file, you can either make a [Custom Field
 Field::make('field_name')
     ->component('components.fields.custom_field')
 ```
+
+### <a name="methods"></a>Methods
+
+By default every field has some public methods available to return its data.
+
+#### `getName($usePrefixes = true)`
+
+This method returns the name of the field and will prefix it with the `groupPrefixes` if it's requested.
+
+#### `getId()`
+
+This method can be used to get the input id. This will be unique per field.
+
+#### `getValue($doConditionalChecks = false)`
+
+This method will return the value.
+
+#### `getPlaceholder()`
+
+This method can be used to get the placeholder, if none is set the label will be returned.
+
+#### `getLabel()`
+
+This method can be used to get the label of the field.
 
 ### <a name="validation"></a>Validation
 
