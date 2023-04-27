@@ -3,6 +3,6 @@
 return [
     'defaults' => [
         'inputClass' => '',
-        'divClass' => 'col-6',
-    ]
+        'divClass' => 'mb-2',
+    ],
 ];

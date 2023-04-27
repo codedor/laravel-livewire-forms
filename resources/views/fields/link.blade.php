@@ -11,5 +11,7 @@
 
     @include('livewire-forms::fields.gdpr')
 
-    @include('livewire-forms::fields.error')
+    @include('livewire-forms::fields.error', [
+        'inlined' => true
+    ])
 </div>

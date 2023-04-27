@@ -6,7 +6,7 @@
         id="{{ $field->getName() }}"
         class="{{ $field->class }}"
         name="{{ $field->getName() }}[]"
-        @if($field->readOnly) disabled @endif
+        @if ($field->readOnly) disabled @endif
         multiple
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >

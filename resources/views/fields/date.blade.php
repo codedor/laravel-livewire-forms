@@ -1,19 +1,26 @@
 <div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
-    @include('livewire-forms::fields.label')
+    <div class="form-input-wrapper">
+        @include('livewire-forms::fields.label', [
+            'rules' => $field->rules
+        ])
 
-    <input
-        @include('livewire-forms::fields.binding')
-        id="{{ $field->getName() }}"
-        type="date"
-        class="{{ $field->class }}"
-        name="{{ $field->getName() }}"
-        placeholder="{{ $field->getLabel() }}"
-        @if($field->readOnly) disabled @endif
-        value="{{ $field->getValue() }}"
-        @if ($field->dusk) dusk={{ $field->dusk }} @endif
-    >
+        <input
+            @include('livewire-forms::fields.binding')
+            id="{{ $field->getName() }}"
+            type="date"
+            class="form-control
+                @error(($field->containsFile ? 'files.' : 'fields.') . $field->getName())
+                    is-invalid
+                @enderror
+                {{ $field->class ?? config('livewire-forms.defaults.inputClass') }}"
+            name="{{ $field->getName() }}"
+            placeholder="{{ $field->getLabel() }}"
+            value="{{ $field->getValue() }}"
+            @if ($field->props) {{ $field->props }} @endif
+            @if ($field->readOnly) disabled @endif
+            @if ($field->dusk) dusk={{ $field->dusk }} @endif
+        >
 
-    @include('livewire-forms::fields.gdpr')
-
-    @include('livewire-forms::fields.error')
+        @include('livewire-forms::fields.error')
+    </div>
 </div>
