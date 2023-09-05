@@ -3,36 +3,33 @@
 namespace Codedor\LivewireForms;
 
 use Codedor\LivewireForms\Fields\Field;
-use Codedor\LivewireForms\Traits\HandleFiles;
-use Codedor\LivewireForms\Traits\HandleSteps;
-use Codedor\LivewireForms\Traits\HandleSubmit;
+use Codedor\LivewireForms\Traits;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Livewire\Component;
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class FormController extends Component
 {
-    use HandleFiles;
-    use HandleSteps;
-    use HandleSubmit;
+    use Traits\HandleFiles;
+    use Traits\HandleSteps;
+    use Traits\HandleSubmit;
     use WithFileUploads;
 
-    public $formClass;
-    public $modelClass;
+    public string $formClass;
+    public string $modelClass;
 
-    public $locale = null;
-    public $component;
-    public $fields = [];
-    public $validation = [];
-    public $uniqueFormId;
-    public $syncs = [];
-    public $flashes = [];
+    public null | string $locale = null;
+    public null | string $component;
+    public array $fields = [];
+    public array $validation = [];
+    public array $syncs = [];
+    public array $flashes = [];
 
-    protected $form = null;
-    protected $fieldStack = [];
+    protected null | Form $form = null;
+    protected array $fieldStack = [];
 
     public function hydrate()
     {
