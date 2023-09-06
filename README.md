@@ -13,7 +13,7 @@ composer require codedor/laravel-livewire-forms
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="livewire-forms-config"
+php artisan vendor:publish --tag="laravel-livewire-forms-config"
 ```
 
 This is the contents of the published config file:
@@ -30,7 +30,7 @@ return [
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="livewire-forms-views"
+php artisan vendor:publish --tag="laravel-livewire-forms-views"
 ```
 
 ## Usage
