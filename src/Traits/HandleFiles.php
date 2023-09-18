@@ -37,7 +37,7 @@ trait HandleFiles
     private function uploadFile($field, $file)
     {
         try {
-            return $file->upload($field->disk ?? 'public');
+            return $file->save($field->disk ?? 'public');
         } catch (ValidationException $e) {
             throw ValidationException::withMessages([
                 'files.' . $field->getName() => $e->getMessage(),
