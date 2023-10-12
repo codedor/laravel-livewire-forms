@@ -2,7 +2,7 @@
 
 namespace Codedor\LivewireForms\Fields;
 
-use Codedor\Media\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 class ImageField extends Field
 {
