@@ -28,6 +28,7 @@ class FormController extends Component
     public array $syncs = [];
     public array $flashes = [];
 
+    protected array $messages = [];
     protected null | Form $form = null;
     protected array $fieldStack = [];
 
@@ -99,7 +100,10 @@ class FormController extends Component
     // Get and set the validation rules
     public function setValidation()
     {
-        $this->validation = $this->getForm()->validation();
+        $validation = $this->getForm()->validation();
+
+        $this->validation = $validation['rules'] ?? [];
+        $this->messages = $validation['messages'] ?? [];
     }
 
     public function getForm()
