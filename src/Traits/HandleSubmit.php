@@ -37,6 +37,7 @@ trait HandleSubmit
         // Do other things, like mails
         $this->afterSubmit();
 
+        // Dispatch an event for event tracking
         $this->dispatchEventTracking();
 
         // Reset form
@@ -97,17 +98,19 @@ trait HandleSubmit
     public function successMessage()
     {
         session()->flash('message', __('form.success message'));
+
+        $this->dispatch('form-saved');
     }
 
     public function afterSubmit()
     {
-        $this->dispatchBrowserEvent('form-saved');
+        //
     }
 
     public function dispatchEventTracking()
     {
         if ($this->eventTrackingData()) {
-            $this->dispatchBrowserEvent('form-event-tracking', $this->eventTrackingData());
+            $this->dispatch('form-event-tracking', $this->eventTrackingData());
         }
     }
 

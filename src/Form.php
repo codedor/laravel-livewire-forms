@@ -63,19 +63,21 @@ abstract class Form
     public function validation($stack = null, $skipChecks = false): array
     {
         $rules = collect([]);
+        $messages = collect([]);
         $fields = $stack ?? collect($this->fieldStack());
 
-        $fields->each(function (Field $value) use (&$rules, $skipChecks) {
+        $fields->each(function (Field $value) use (&$rules, &$messages, $skipChecks) {
             if ($skipChecks || $value->conditionalCheck()) {
-                if ($value->containsFile) {
-                    $rules->put('files.' . $value->getName(), $value->rules ?? '');
-                } else {
-                    $rules->put('fields.' . $value->getName(), $value->rules ?? '');
-                }
+                $target = ($value->containsFile ? 'files' : 'fields');
+                $rules->put($target . '.' . $value->getName(), $value->rules ?? '');
+                $messages->put($target . '.' . $value->getName(), $value->validationMessages ?? '');
             }
         });
 
-        return $rules->toArray();
+        return [
+            'rules' => $rules->toArray(),
+            'messages' => $messages->filter()->toArray(),
+        ];
     }
 
     public function stepValidation($step): array
