@@ -5,9 +5,12 @@
         @include('livewire-forms::fields.binding')
         id="{{ $field->getName() }}"
         type="date"
+        @class([
+            $field->class ?? config('livewire-forms.defaults.inputClass'),
+            'is-invalid' => $errors->first(($field->containsFile ? 'files.' : 'fields.') . $field->getName()),
+        ])
         class="{{ $field->class }}"
         name="{{ $field->getName() }}"
-        placeholder="{{ $field->getLabel() }}"
         @if($field->readOnly) disabled @endif
         value="{{ $field->getValue() }}"
         @if ($field->dusk) dusk={{ $field->dusk }} @endif

@@ -22,7 +22,7 @@ test('form controller will render', function () {
     livewire(FormController::class, [
         'formClass' => TestForm::class,
     ])
-        ->assertSeeHtml('<div id="livewire-form">');
+        ->assertSeeHtml('<div class="livewire-form">');
 });
 
 test('form controller sets default locale', function () {

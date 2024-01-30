@@ -1,4 +1,4 @@
-<div id="livewire-form">
+<div class="livewire-form">
     @if (session()->has('message'))
         <div class="alert alert-success">
             {{ session('message') }}

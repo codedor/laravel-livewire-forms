@@ -5,7 +5,10 @@
         @include('livewire-forms::fields.binding')
         id="{{ $field->getName() }}"
         type="{{ $field->type ?? 'text' }}"
-        class="{{ $field->class ?? config('livewire-forms.defaults.inputClass') }}"
+        @class([
+            $field->class ?? config('livewire-forms.defaults.inputClass'),
+            'is-invalid' => $errors->first(($field->containsFile ? 'files.' : 'fields.') . $field->getName()),
+        ])
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         value="{{ $field->getValue() }}"
