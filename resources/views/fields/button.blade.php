@@ -1,5 +1,5 @@
 <div class="{{ $field->divClass ?? 'col-6' }}">
-    <input
+    <button
         @if ($field->action)
             wire:click.prevent="{{ $field->action }}"
         @endif
@@ -8,4 +8,6 @@
         value="{{ $field->getName() }}"
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
+        {{ $field->getName() }}
+    </button>
 </div>
