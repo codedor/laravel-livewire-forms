@@ -1,4 +1,4 @@
-<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
+<div @class([$field->divClass ?? config('livewire-forms.defaults.divClass')])>
     <a
         href="{{ $field->getValue() }}"
         class="{{ $field->class }}"

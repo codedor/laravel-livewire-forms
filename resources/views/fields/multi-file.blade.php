@@ -1,9 +1,12 @@
-<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
+<div @class([$field->divClass ?? config('livewire-forms.defaults.divClass')])>
     @include('livewire-forms::fields.label')
 
     <input
         type="file"
-        class="{{ $field->class }}"
+        @class([
+            $field->class ?? config('livewire-forms.defaults.inputClass'),
+            'is-invalid' => $errors->has('fields.' . $field->getName()),
+        ])
         id="{{ $field->getName() }}"
         name="{{ $field->getName() }}[]"
         placeholder="{{ $field->getLabel() }}"
