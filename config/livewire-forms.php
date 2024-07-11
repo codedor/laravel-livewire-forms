@@ -3,10 +3,10 @@
 return [
     'defaults' => [
         'divClass' => 'form-group has-validation',
-        'rowClass' => 'row gy-r-6',
-        'groupClass' => 'd-flex flex-column gap-r-6',
+        'rowClass' => 'row gy-8',
+        'groupClass' => 'd-flex flex-column gap-8',
         'colClass' => 'col-md',
-        'formClass' => 'd-flex flex-column gap-r-6',
+        'formClass' => 'd-flex flex-column gap-8',
         'inputClass' => 'form-control',
         'inputSelectClass' => 'form-select',
         'labelClass' => 'form-label',
