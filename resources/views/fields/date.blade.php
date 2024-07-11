@@ -13,7 +13,6 @@
             'is-invalid' => $errors->has('fields.' . $field->getName()),
         ])
         name="{{ $field->getName() }}"
-        placeholder="{{ $field->getLabel() }}"
         @if($field->readOnly) disabled @endif
         value="{{ $field->getValue() }}"
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
