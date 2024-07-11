@@ -2,11 +2,11 @@
 
 return [
     'defaults' => [
-        'divClass' => 'form-group has-validation',
-        'rowClass' => 'row gy-8',
-        'groupClass' => 'd-flex flex-column gap-8',
-        'colClass' => 'col-md',
         'formClass' => 'd-flex flex-column gap-8',
+        'rowClass' => 'row gy-8',
+        'colClass' => 'col-md',
+        'divClass' => 'form-group has-validation',
+        'groupClass' => 'd-flex flex-column gap-8',
         'inputClass' => 'form-control',
         'inputSelectClass' => 'form-select',
         'labelClass' => 'form-label',
@@ -16,6 +16,6 @@ return [
         'checkLabelClass' => 'form-check-label',
         'buttonClass' => 'btn btn--primary',
         'buttonIcon' => null,
-        'textareaRows' => 5
+        'textareaRows' => 5,
     ]
 ];
