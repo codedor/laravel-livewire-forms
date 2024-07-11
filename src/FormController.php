@@ -3,7 +3,6 @@
 namespace Codedor\LivewireForms;
 
 use Codedor\LivewireForms\Fields\Field;
-use Codedor\LivewireForms\Traits;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
