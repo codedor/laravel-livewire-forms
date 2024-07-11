@@ -2,9 +2,11 @@
 
 return [
     'defaults' => [
-        'divClass' => 'form-group col has-validation',
-        'rowClass' => 'row gy-r-3',
-        'formClass' => 'd-flex flex-column gap-3',
+        'divClass' => 'form-group has-validation',
+        'rowClass' => 'row gy-r-6',
+        'groupClass' => 'd-flex flex-column gap-r-6',
+        'colClass' => 'col-md',
+        'formClass' => 'd-flex flex-column gap-r-6',
         'inputClass' => 'form-control',
         'inputSelectClass' => 'form-select',
         'labelClass' => 'form-label',
@@ -13,6 +15,7 @@ return [
         'checkInputClass' => 'form-check-input',
         'checkLabelClass' => 'form-check-label',
         'buttonClass' => 'btn btn--primary',
-        'textareaRows' => 5,
+        'buttonIcon' => null,
+        'textareaRows' => 5
     ]
 ];
