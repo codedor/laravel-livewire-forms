@@ -12,7 +12,7 @@
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
     >
         {{ $field->getName() }}
-        @if($buttonIcon)
+        @if(config('livewire-forms.defaults.buttonIcon'))
             <x-dynamic-component component="{{ $field->buttonIcon ?? config('livewire-forms.defaults.buttonIcon') }}" />
         @endif
     </button>
