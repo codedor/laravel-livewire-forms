@@ -1,7 +1,8 @@
 <fieldset
     @class([
+      $field->groupClass ?? config('livewire-forms.defaults.groupClass'),
       $field->colClass ?? config('livewire-forms.defaults.colClass'),
-      $field->groupClass ?? config('livewire-forms.defaults.groupClass')
+      $field->gapClass ?? config('livewire-forms.defaults.gapClass')
     ])
 >
     @if($field->legendTitle)

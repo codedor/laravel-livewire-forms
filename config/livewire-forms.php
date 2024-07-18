@@ -2,11 +2,13 @@
 
 return [
     'defaults' => [
-        'formClass' => 'd-flex flex-column gap-8',
-        'rowClass' => 'row gy-8',
+        'formClass' => 'd-flex flex-column',
+        'rowClass' => 'row',
         'colClass' => 'col-md',
         'divClass' => 'form-group has-validation',
-        'groupClass' => 'd-flex flex-column gap-8',
+        'gapClass' => 'gap-8',
+        'gutterClass' => 'gy-8',
+        'groupClass' => 'd-flex flex-column',
         'inputClass' => 'form-control',
         'inputSelectClass' => 'form-select',
         'labelClass' => 'form-label',
