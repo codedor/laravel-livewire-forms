@@ -4,7 +4,7 @@
       $field->colClass ?? config('livewire-forms.defaults.colClass')
     ])
 >
-    <div class="form-check">
+    <div @class([$field->checkDivClass ?? config('livewire-forms.defaults.checkDivClass')])>
         <input
             @include('livewire-forms::fields.binding')
             id="{{ $field->getName() }}"

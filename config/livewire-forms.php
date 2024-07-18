@@ -14,6 +14,7 @@ return [
         'labelClass' => 'form-label',
         'fileInputClass' => 'form-input-file',
         'fileInputLabelClass' => 'form-label-file',
+        'checkDivClass' => 'form-check',
         'checkInputClass' => 'form-check-input',
         'checkLabelClass' => 'form-check-label',
         'checkGapClass' => 'gap-2',
