@@ -1,6 +1,8 @@
-<div @class([
-    $field->divClass ?? config('livewire-forms.defaults.divClass'),
-    $field->colClass ?? config('livewire-forms.defaults.colClass')])
+<div
+    @class([
+      $field->divClass ?? config('livewire-forms.defaults.divClass'),
+      $field->colClass ?? config('livewire-forms.defaults.colClass')
+    ])
 >
     <div class="form-check">
         <input

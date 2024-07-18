@@ -16,6 +16,7 @@ return [
         'fileInputLabelClass' => 'form-label-file',
         'checkInputClass' => 'form-check-input',
         'checkLabelClass' => 'form-check-label',
+        'checkGapClass' => 'gap-2',
         'imageClass' => 'img-fluid',
         'linkClass' => 'btn btn--link',
         'buttonClass' => 'btn btn--primary',

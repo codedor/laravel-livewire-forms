@@ -1,10 +1,15 @@
-<div @class([
-    $field->divClass ?? config('livewire-forms.defaults.divClass'),
-    $field->colClass ?? config('livewire-forms.defaults.colClass')])
+<div
+    @class([
+      $field->divClass ?? config('livewire-forms.defaults.divClass'),
+      $field->colClass ?? config('livewire-forms.defaults.colClass')
+    ])
 >
     @include('livewire-forms::fields.label')
 
-    <div class="d-flex flex-column gap-2">
+    <div @class([
+        'd-flex flex-column',
+        $field->checkGapClass ?? config('livewire-forms.defaults.checkGapClass')
+    ])>
         @foreach ($field->options as $key => $value)
             <div class="form-check">
                 <input
