@@ -6,7 +6,7 @@
 
     @if($field->getValue())
         <img
-            class="{{ $field->class ?? 'img-fluid' }}"
+            class="{{ $field->class ?? config('livewire-forms.defaults.imageClass') }}"
             src="{{ isset($files_[$field->getName()]) ? $files_[$field->getName()]->temporaryUrl() : $field->getValue() }}"
             alt="{{ $field->altText ?? optional($field->getValue())->name  }}"
             id="{{ $field->getName() }}"

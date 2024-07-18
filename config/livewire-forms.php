@@ -14,6 +14,8 @@ return [
         'fileInputLabelClass' => 'form-label-file',
         'checkInputClass' => 'form-check-input',
         'checkLabelClass' => 'form-check-label',
+        'imageClass' => 'img-fluid',
+        'linkClass' => 'btn btn--link',
         'buttonClass' => 'btn btn--primary',
         'buttonIcon' => null,
         'textareaRows' => 5,

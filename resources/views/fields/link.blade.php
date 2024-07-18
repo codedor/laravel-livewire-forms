@@ -4,7 +4,7 @@
 >
     <a
         href="{{ $field->getValue() }}"
-        class="{{ $field->class }}"
+        class="{{ $field->class ?? config('livewire-forms.defaults.linkClass') }}"
         title="{{ $field->getName() }}"
         @if ($field->target) target="{{ $field->target }}" @endif
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
