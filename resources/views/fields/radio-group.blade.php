@@ -11,7 +11,11 @@
         $field->checkGapClass ?? config('livewire-forms.defaults.checkGapClass')
     ])>
         @foreach ($field->options as $key => $value)
-            <div @class([$field->checkDivClass ?? config('livewire-forms.defaults.checkDivClass')])>
+            <div
+                @class([
+                  $field->checkDivClass ?? config('livewire-forms.defaults.checkDivClass')
+                ])
+            >
                 <input
                     @include('livewire-forms::fields.binding')
                     type="radio"

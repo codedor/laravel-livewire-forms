@@ -17,7 +17,12 @@
             @if ($field->dusk) dusk={{ $field->dusk }} @endif
         >
 
-        <label @class([config('livewire-forms.defaults.checkLabelClass')]) for="{{ $field->getName() }}">
+        <label
+            @class([
+              $field->checkLabelClass ?? config('livewire-forms.defaults.checkLabelClass')
+            ])
+            for="{{ $field->getName() }}"
+        >
             {!! $field->getLabel() !!}
         </label>
     </div>
