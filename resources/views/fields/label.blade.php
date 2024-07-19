@@ -1,6 +1,9 @@
 <label
     for="{{ $field->getName() }}"
-    class="{{ $field->labelClass }} {{ ($field->getValue() ? 'changed' : '') }}"
+    @class([
+        $field->labelClass ?? config('livewire-forms.defaults.labelClass'),
+        $field->getValue() ? 'changed' : ''
+    ])
 >
     {{ $field->getLabel() }}
 </label>

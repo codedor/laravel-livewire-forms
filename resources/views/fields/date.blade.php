@@ -1,13 +1,18 @@
-<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
+<div @class([
+    $field->divClass ?? config('livewire-forms.defaults.divClass'),
+    $field->colClass ?? config('livewire-forms.defaults.colClass')])
+>
     @include('livewire-forms::fields.label')
 
     <input
         @include('livewire-forms::fields.binding')
         id="{{ $field->getName() }}"
         type="date"
-        class="{{ $field->class }}"
+        @class([
+            $field->class ?? config('livewire-forms.defaults.inputClass'),
+            'is-invalid' => $errors->has('fields.' . $field->getName()),
+        ])
         name="{{ $field->getName() }}"
-        placeholder="{{ $field->getLabel() }}"
         @if($field->readOnly) disabled @endif
         value="{{ $field->getValue() }}"
         @if ($field->dusk) dusk={{ $field->dusk }} @endif

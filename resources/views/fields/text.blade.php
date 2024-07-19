@@ -1,16 +1,22 @@
-<div class="{{ $field->divClass ?? config('livewire-forms.defaults.divClass') }}">
+<div @class([
+    $field->divClass ?? config('livewire-forms.defaults.divClass'),
+    $field->colClass ?? config('livewire-forms.defaults.colClass')])
+>
     @include('livewire-forms::fields.label')
 
     <input
         @include('livewire-forms::fields.binding')
         id="{{ $field->getName() }}"
         type="{{ $field->type ?? 'text' }}"
-        class="{{ $field->class ?? config('livewire-forms.defaults.inputClass') }}"
         name="{{ $field->getName() }}"
         placeholder="{{ $field->getLabel() }}"
         value="{{ $field->getValue() }}"
         @if($field->readOnly) disabled @endif
         @if ($field->dusk) dusk={{ $field->dusk }} @endif
+        @class([
+            $field->class ?? config('livewire-forms.defaults.inputClass'),
+            'is-invalid' => $errors->has('fields.' . $field->getName()),
+        ])
     >
 
     @include('livewire-forms::fields.gdpr')
